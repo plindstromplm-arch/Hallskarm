@@ -141,7 +141,7 @@ body.night .foot button{background:#172130;border-color:#2c3b50}
 .panel-alert.visible{display:block}
 @media (orientation:landscape) and (max-height:650px){.panel-alert{padding:4px 8px;font-size:11px}}
 /* v10s: kompakt solinformation och paraplyråd */
-.suninfo{font-size:clamp(10px,1vw,13px);color:#d0d9e8;margin-top:3px;white-space:nowrap}
+.suninfo svg{width:17px;height:17px;vertical-align:-3px;stroke:#f3c36a;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}.suninfo{font-size:clamp(10px,1vw,13px);color:#d0d9e8;margin-top:3px;white-space:nowrap}
 .rainnote{line-height:1.2}
 @media (orientation:landscape) and (max-height:650px){.suninfo{font-size:10px;margin-top:2px}}
 </style></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
@@ -167,7 +167,10 @@ const codes={0:['Klart','☀️'],1:['Mestadels klart','🌤️'],2:['Halvklart'
    const localDate=(c.time||'').slice(0,10);
    const index=Math.max(0,sun.time.indexOf(localDate));
    const rise=sun.sunrise[index],set=sun.sunset[index];
-   $('suninfo').textContent=rise&&set?'🌅 '+rise.slice(11,16)+'  ·  🌇 '+set.slice(11,16):'';
+   const sunriseIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v2M4.93 4.93l1.42 1.42M2 12h2M20 12h2M17.65 6.35l1.42-1.42M12 9a5 5 0 0 1 5 5M7 14a5 5 0 0 1 5-5M2 18h20M9 21l3-3 3 3"/></svg>';
+   const sunsetIcon='<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2v2M4.93 4.93l1.42 1.42M2 12h2M20 12h2M17.65 6.35l1.42-1.42M12 9a5 5 0 0 1 5 5M7 14a5 5 0 0 1 5-5M2 18h20M9 18l3 3 3-3"/></svg>';
+   const riseTime=rise?.slice(11,16),setTime=set?.slice(11,16);
+   $('suninfo').innerHTML=/^\d{2}:\d{2}$/.test(riseTime||'')&&/^\d{2}:\d{2}$/.test(setTime||'')?sunriseIcon+' '+riseTime+' &nbsp;·&nbsp; '+sunsetIcon+' '+setTime:'';
   }else $('suninfo').textContent='';
   $('temp').textContent=Math.round(c.temperature_2m)+'°';$('weathertext').textContent=w[0];$('weathericon').textContent=w[1];$('weatherstatus').textContent='Uppdaterat '+fmt.format(new Date());
  const h=j.hourly,box=$('weekdays');
