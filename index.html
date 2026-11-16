@@ -144,7 +144,37 @@ body.night .foot button{background:#172130;border-color:#2c3b50}
 .suninfo svg{width:17px;height:17px;vertical-align:-3px;stroke:#f3c36a;stroke-width:1.7;fill:none;stroke-linecap:round;stroke-linejoin:round}.suninfo{font-size:clamp(10px,1vw,13px);color:#d0d9e8;margin-top:3px;white-space:nowrap}
 .rainnote{line-height:1.2}
 @media (orientation:landscape) and (max-height:650px){.suninfo{font-size:10px;margin-top:2px}}
-</style></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
+
+/* Hue design preview: independent of live dashboard */
+.hue-launch{position:fixed;right:15px;top:13px;z-index:20;border:1px solid #46536c;background:#293346;color:#f5f6fa;border-radius:13px;padding:10px 13px;font-size:20px;cursor:pointer}
+.hue-view{display:none;position:fixed;inset:0;z-index:30;background:#090c13;overflow:auto;padding:clamp(18px,3vw,38px);color:#f5f6fa}
+body.hue-open .hue-view{display:block}
+body.hue-open .wrap{visibility:hidden}
+.hue-inner{max-width:1250px;margin:auto}
+.hue-header{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:25px}
+.hue-title{font-size:clamp(30px,4vw,52px);font-weight:750;margin:8px 0}
+.hue-back,.hue-all{background:#293346;color:white;border:1px solid #46536c;border-radius:12px;padding:13px 20px;font:inherit;cursor:pointer}
+.hue-demo{color:#b9c6d8;font-size:14px;margin:5px 0 24px}
+.hue-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px}
+.hue-room{background:#191e29;border:1px solid #2b3444;border-radius:22px;padding:23px;min-width:0}
+.hue-room-top{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.hue-room-name{font-size:clamp(20px,2.5vw,30px);font-weight:700}
+.hue-room-state{color:#aab4c6;margin:8px 0 20px}
+.hue-toggle{border:1px solid #59657a;background:#293346;color:white;border-radius:13px;padding:12px 20px;font:inherit;cursor:pointer}
+.hue-toggle.on{background:#785e29;border-color:#ad8a44}
+.hue-room input{width:100%;accent-color:#f3c36a;margin-top:15px}
+.hue-scenes{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
+.hue-scenes button{border:1px solid #46536c;background:#222c3d;color:white;border-radius:12px;padding:13px 18px;font:inherit;cursor:pointer}
+@media(max-width:650px){.hue-grid{grid-template-columns:1fr}.hue-launch{right:8px;top:8px;padding:7px 9px}.hue-room{padding:18px}}
+</style></head><body><button class="hue-launch" id="hue-launch" aria-label="Öppna belysning" title="Belysning">💡</button>
+<section class="hue-view" id="hue-view" aria-label="Philips Hue, designförslag">
+ <div class="hue-inner">
+  <div class="hue-header"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="hue-title">💡 Belysning</div></div><button class="hue-back" id="hue-back">← Till hallskärmen</button></div>
+  <div class="hue-demo">Designförslag · Knapparna fungerar som demonstration och styr inte dina riktiga Hue-lampor.</div>
+  <div class="hue-grid" id="hue-grid"></div>
+  <div class="hue-room" style="margin-top:16px"><div class="hue-room-name">Scener</div><div class="hue-scenes"><button data-scene="evening">🌙 Kväll</button><button data-scene="bright">☀️ Full belysning</button><button data-scene="off">◯ Släck allt</button></div></div>
+ </div>
+</section><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
 const $=id=>document.getElementById(id);const fmtSeconds=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',second:'2-digit'});const fmt=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit'});function isoWeekStockholm(date){
  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
  const get=type=>Number(parts.find(p=>p.type===type)?.value);
@@ -270,4 +300,29 @@ async function fetchAlerts(id,stopDeviations){const bar=$('alerts');let texts=[]
 }
 async function departures(){if(loadingDepartures)return;loadingDepartures=true;try{if(!lastUpdated)$('status').textContent='Hämtar SL-avgångar …';$('status').className='status';const id=await getSite();const r=await fetch('https://transport.integration.sl.se/v1/sites/'+encodeURIComponent(id)+'/departures',{cache:'no-store'});if(!r.ok)throw Error('SL svarade HTTP '+r.status);const j=await r.json();const all=Array.isArray(j.departures)?j.departures:[];const sorted=all.sort((a,b)=>(departureDate(a)?.getTime()||Infinity)-(departureDate(b)?.getTime()||Infinity));const north=sorted.filter(towardsCity);cachedTrains=sorted.filter(d=>mode(d)==='TRAIN'&&commuterTowardsCity(d));cachedMetros=north.filter(d=>mode(d)==='METRO'&&String(d.line?.designation||d.line?.name||'18').includes('18'));lastUpdated=new Date();redrawCountdowns();$('status').textContent='SL uppdaterat '+fmtSeconds.format(lastUpdated);fetchAlerts(id,j.stop_deviations)}catch(e){if(!lastUpdated){$('trains').textContent='Avgångarna kan inte hämtas just nu';$('metros').textContent='Avgångarna kan inte hämtas just nu'}$('status').className='error';$('status').textContent='SL-fel: '+e.message+(lastUpdated?' · Senast '+fmtSeconds.format(lastUpdated):'')}finally{loadingDepartures=false}}
 $('refresh').addEventListener('click',()=>{weather();departures()});weather();departures();setInterval(weather,600000);setInterval(departures,15000);setInterval(redrawCountdowns,1000);
-</script></body></html>
+</script>
+<script>
+/* Fristående prototyp: ingen Hue-anslutning och inga nycklar */
+(function(){
+const rooms=[{name:'Vardagsrum',on:true,level:65},{name:'Kök',on:false,level:75},{name:'Sovrum',on:false,level:35},{name:'Hall',on:true,level:80}];
+const grid=document.getElementById('hue-grid');
+function render(){
+ grid.replaceChildren();
+ rooms.forEach((room,i)=>{
+ const card=document.createElement('article');card.className='hue-room';
+ const top=document.createElement('div');top.className='hue-room-top';
+ const name=document.createElement('div');name.className='hue-room-name';name.textContent='💡 '+room.name;
+ const button=document.createElement('button');button.className='hue-toggle'+(room.on?' on':'');button.textContent=room.on?'Tänd':'Släckt';button.setAttribute('aria-label','Växla '+room.name);button.onclick=()=>{room.on=!room.on;render()};
+ top.append(name,button);
+ const status=document.createElement('div');status.className='hue-room-state';status.textContent=room.on?'Ljusstyrka '+room.level+' %':'Lamporna är släckta';
+ const range=document.createElement('input');range.type='range';range.min='1';range.max='100';range.value=room.level;range.setAttribute('aria-label','Ljusstyrka '+room.name);range.oninput=()=>{room.level=Number(range.value);room.on=true;status.textContent='Ljusstyrka '+room.level+' %';button.textContent='Tänd';button.classList.add('on')};
+ card.append(top,status,range);grid.append(card);
+ });
+}
+document.getElementById('hue-launch').onclick=()=>{document.body.classList.add('hue-open');render()};
+document.getElementById('hue-back').onclick=()=>document.body.classList.remove('hue-open');
+document.querySelectorAll('[data-scene]').forEach(button=>button.onclick=()=>{const scene=button.dataset.scene;rooms.forEach(room=>{room.on=scene!=='off';if(scene==='evening')room.level=35;if(scene==='bright')room.level=100});render()});
+render();
+})();
+</script>
+</body></html>
