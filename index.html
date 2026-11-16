@@ -1,0 +1,256 @@
+<!doctype html><html lang="sv"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="theme-color" content="#090c13"><meta name="apple-mobile-web-app-capable" content="yes"><title>Lindströms · Farsta strand · Hallskärm v10p</title><style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;background:#090c13;color:#f5f6fa;font-family:system-ui,-apple-system,sans-serif}body{padding:clamp(12px,2.3vw,28px)}.wrap{max-width:1300px;margin:0 auto}.top{display:flex;justify-content:space-between;align-items:center;gap:20px;margin-bottom:18px}.small{font-size:12px;letter-spacing:2px;color:#aab4c6}.clock{font-size:clamp(62px,9vw,112px);font-weight:750;letter-spacing:-.055em;line-height:1.05;font-variant-numeric:tabular-nums}.date{color:#aab4c6;margin-top:5px;font-size:16px}.weatherbox{display:flex;align-items:center;gap:20px;min-width:260px}.weatherbox .temp{font-size:clamp(35px,5vw,65px);font-weight:750}.emoji{font-size:50px}.muted,.note{color:#aab4c6}.note{font-size:12px}.cards{display:grid;grid-template-columns:1fr 1fr;gap:16px}.panel{background:#191e29;border:1px solid #2b3444;border-radius:22px;padding:clamp(16px,2vw,27px);min-width:0}.heading{font-size:15px;color:#aab4c6;margin-bottom:14px}.mode{display:flex;align-items:center;gap:13px;font-size:clamp(21px,2.5vw,30px);font-weight:700;margin-bottom:15px}.tag{border-radius:10px;padding:8px 13px;color:white}.train{background:#b14588}.metro{background:#398c63}.entry{display:flex;justify-content:space-between;align-items:center;padding:14px 0;border-bottom:1px solid #343a49;gap:10px;min-height:88px}.entry:last-child{border:0}.destination{font-size:clamp(17px,2vw,23px);font-weight:600}.sub{font-size:14px;color:#aab4c6;margin-top:4px}.mins{font-size:clamp(25px,3.4vw,43px);font-weight:750;white-space:nowrap;font-variant-numeric:tabular-nums}.error{color:#ffb6a9;font-size:13px}.foot{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-top:12px}.foot button{background:#293346;color:#fff;border:1px solid #46536c;border-radius:10px;padding:9px 14px;font:inherit}.weatherstatus{font-size:12px;color:#aab4c6}.status{font-size:12px;color:#aab4c6}.subtitle{color:#aab4c6;font-size:13px;margin-top:3px}@media(max-width:650px){.top{align-items:flex-start}.weatherbox{min-width:0;gap:7px}.emoji{font-size:30px}.cards{grid-template-columns:1fr}.clock{font-size:66px}.panel{padding:18px}.entry{min-height:70px}.mins{font-size:28px}}@media (orientation:landscape) and (max-height:650px){body{padding:12px 22px}.top{margin-bottom:10px}.clock{font-size:65px}.date{font-size:13px}.panel{padding:14px 19px}.mode{font-size:22px;margin-bottom:4px}.entry{padding:7px 0;min-height:61px}.destination{font-size:18px}.mins{font-size:30px}.heading{margin-bottom:7px}.foot{margin-top:8px}}
+
+/* Version 7: skärmfyllande iPad-layout */
+html,body{height:100%;overflow:hidden}
+body{padding:clamp(8px,1.25vw,16px)}
+.wrap{max-width:none;width:100%;height:100%;display:flex;flex-direction:column;min-height:0}
+.top{flex:0 0 auto;margin-bottom:clamp(8px,1.2vh,14px);padding:0 clamp(5px,1vw,14px)}
+.clock{font-size:clamp(72px,10vw,132px);line-height:.95}
+.date{font-size:clamp(17px,2vw,24px)}
+.small{font-size:clamp(13px,1.3vw,18px)}
+.weatherbox{gap:clamp(12px,3vw,40px)}
+.weatherbox .temp{font-size:clamp(55px,7vw,88px);line-height:1}
+.emoji{font-size:clamp(48px,6vw,75px)}
+.muted{font-size:clamp(16px,1.7vw,22px)}
+.cards{flex:1 1 auto;min-height:0;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:clamp(10px,1.4vw,20px)}
+.panel{display:flex;flex-direction:column;min-height:0;padding:clamp(13px,1.8vw,25px)}
+.heading{font-size:clamp(13px,1.4vw,19px);margin-bottom:clamp(5px,1vh,12px)}
+.mode{font-size:clamp(25px,3vw,39px);margin-bottom:clamp(5px,1vh,12px)}
+.tag{padding:5px 12px}
+#trains,#metros{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:space-around}
+.entry{flex:1 1 0;min-height:0;padding:clamp(5px,1vh,13px) 0}
+.destination{font-size:clamp(22px,2.55vw,34px)}
+.sub{font-size:clamp(14px,1.5vw,19px)}
+.mins{font-size:clamp(36px,4.5vw,61px)}
+.foot{flex:0 0 auto;margin-top:clamp(5px,1vh,10px)}
+.status,.note{font-size:clamp(12px,1.2vw,16px)}
+.foot button{font-size:clamp(13px,1.4vw,18px)}
+@media (orientation:landscape) and (max-height:650px){
+body{padding:8px 12px}.top{margin-bottom:7px}.clock{font-size:clamp(58px,8vw,90px)}
+.date{font-size:14px}.weatherbox .temp{font-size:clamp(45px,5.5vw,70px)}
+.panel{padding:10px 17px}.mode{font-size:clamp(22px,2.5vw,31px);margin-bottom:4px}
+.heading{margin-bottom:4px}.entry{min-height:0;padding:3px 0}
+.destination{font-size:clamp(18px,2.1vw,26px)}.mins{font-size:clamp(30px,3.7vw,48px)}
+.sub{font-size:13px}.foot{margin-top:5px}
+}
+@media (orientation:portrait){html,body{height:auto;overflow:auto}.wrap{height:auto}.cards{grid-template-columns:1fr}.panel{min-height:360px}.clock{font-size:clamp(60px,11vw,100px)}.mins{font-size:clamp(29px,6vw,45px)}.top{align-items:center}.weatherbox{min-width:0}.emoji{font-size:40px}}
+
+/* v8: status, spar och trafikmeddelanden */
+.meta{font-size:clamp(12px,1.3vw,16px);color:#b6c2d5;margin-top:5px;line-height:1.3}
+.flags{display:flex;gap:5px;flex-wrap:wrap;margin-top:5px}
+.flag{font-size:clamp(11px,1.05vw,14px);font-weight:750;border-radius:6px;padding:3px 7px;background:#3c4658;color:#fff}
+.flag.warn{background:#6a4b18;color:#ffe3a3}.flag.danger{background:#743239;color:#ffe1e1}
+.entry{align-items:center}.entry .left{min-width:0;flex:1}.entry .right{text-align:right;flex-shrink:0}
+.delay{font-size:clamp(11px,1.15vw,15px);color:#ffc56a;font-weight:650}
+.alertbar{display:none;flex:0 0 auto;margin-top:7px;padding:7px 12px;border-radius:9px;background:#41341f;color:#ffe2a5;font-size:clamp(12px,1.2vw,16px);line-height:1.25;max-height:58px;overflow:hidden}
+@media (orientation:landscape) and (max-height:650px){.flags{margin-top:2px}.flag{padding:1px 5px;font-size:11px}.meta{margin-top:1px;font-size:11px}.alertbar{max-height:35px;padding:4px 9px}}
+
+/* v10: kompakt datum, regnvarning och färgkodade avgångar */
+.dateextra{font-size:clamp(12px,1.35vw,17px);color:#d2d9e5;margin-top:3px;min-height:1.2em}
+.rainnote{font-size:clamp(12px,1.2vw,16px);color:#91c9ff;margin-top:5px;max-width:310px}
+.timegroup{display:flex;align-items:center;justify-content:flex-end;gap:9px}
+.timebadge{display:inline-flex;align-items:center;justify-content:center;width:27px;height:27px;border-radius:50%;font-size:17px;flex-shrink:0;font-weight:900}
+.timebadge.urgent{background:#693038;color:#ffd5d8}.timebadge.soon{background:#61471f;color:#ffdf9b}.timebadge.ok{background:#214c3b;color:#b5f8d0}.timebadge.later{background:#243e60;color:#b9dcff}
+.mins.urgent-minutes{color:#ff555f;font-weight:850;text-shadow:0 0 16px rgba(255,70,80,.18)}
+.mins.soon-minutes{color:#ffbd57;font-weight:850}
+.mins.ok-minutes{color:#58dfa0;font-weight:850}
+.mins.later-minutes{color:#89bfff;font-weight:850}
+.alertbar.critical{background:#612a31;color:#ffe1e1}
+@media (orientation:landscape) and (max-height:650px){.dateextra,.rainnote{font-size:12px;margin-top:2px}.timebadge{width:23px;height:23px;font-size:14px}.timegroup{gap:6px}}
+/* v10d: tydlig avgångstid och försening */
+.departure-time{font-size:clamp(24px,3vw,40px);font-weight:850;line-height:1.1;color:#fff;font-variant-numeric:tabular-nums;white-space:nowrap;margin-top:3px}
+.time-caption{font-size:clamp(10px,1.1vw,14px);font-weight:550;color:#aab4c6;margin-right:7px}
+.original-time{font-size:clamp(13px,1.35vw,18px);color:#aab4c6;text-decoration:line-through;margin-right:8px;font-variant-numeric:tabular-nums}
+.delay-detail{font-size:clamp(11px,1.15vw,15px);color:#ffbd57;font-weight:750;margin-top:3px}
+.entry .right{min-width:150px}
+@media (orientation:landscape) and (max-height:650px){.departure-time{font-size:clamp(22px,2.7vw,32px)}.original-time{font-size:12px}.delay-detail{font-size:11px;margin-top:0}.entry .right{min-width:130px}}
+
+/* v10f: kompakt sjudagarsprognos */
+.weekforecast{flex:0 0 auto;margin:0 3px clamp(7px,1.1vh,12px);padding:8px 13px;background:#151c29;border:1px solid #2b3444;border-radius:15px;display:flex;align-items:center;gap:14px;min-height:76px}
+.weeklabel{font-size:12px;letter-spacing:.08em;color:#b9c6d8;font-weight:700;min-width:92px;line-height:1.35}
+.weekdays{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));flex:1;gap:6px;min-width:0}
+.weekday{display:flex;align-items:center;justify-content:center;gap:3px;flex-direction:column;min-width:0;padding:4px 1px;border-radius:9px;background:#222c3d}
+.weekday .day{font-size:12px;color:#d1dbeb;font-weight:700}.weekday .wx{font-size:20px;line-height:1.2}.weekday .degree{font-size:13px;color:white;font-weight:750;white-space:nowrap}.weekday .low{font-size:11px;color:#9fb2cb}.weekday .rain{font-size:10px;color:#8ed3ff;white-space:nowrap}
+@media (orientation:landscape) and (max-height:650px){.weekforecast{min-height:60px;padding:5px 9px;margin-bottom:6px}.weekday{flex-direction:row;gap:4px;padding:5px 1px}.weekday .wx{font-size:17px}.weekday .day{font-size:11px}.weekday .degree{font-size:12px}.weekday .low{display:none}.weekday .rain{display:none}.weeklabel{font-size:11px;min-width:72px}}
+@media (orientation:portrait){.weekforecast{overflow-x:auto;gap:8px}.weeklabel{min-width:65px}.weekdays{min-width:530px}}
+
+/* v10g: 7-dagarsväder i samma översta rad som dagens väder */
+.top{display:grid;grid-template-columns:minmax(230px,31%) minmax(0,1fr);gap:clamp(8px,1.2vw,18px);align-items:center}
+.weatherbox{min-width:0;width:100%;display:grid;grid-template-columns:minmax(125px,175px) 42px minmax(0,1fr);gap:clamp(5px,.8vw,12px);align-items:center}
+.weatherbox .small{font-size:clamp(10px,1vw,13px);letter-spacing:.08em}
+.weatherbox .temp{font-size:clamp(40px,5.4vw,70px)}
+.weatherbox .muted{font-size:clamp(12px,1.4vw,17px)}
+.weatherbox .weatherstatus,.weatherbox .rainnote{font-size:clamp(9px,.95vw,12px);line-height:1.25}
+.weatherbox .emoji{font-size:clamp(28px,3.4vw,42px)}
+.weekforecast{min-height:0;margin:0;padding:0;background:transparent;border:0;border-radius:0;min-width:0;width:100%;display:block}
+.weekdays{gap:3px;width:100%;min-width:0}
+.weekday{background:#222c3d;padding:6px 1px;gap:2px;min-width:0}
+.weekday .day{font-size:clamp(9px,.9vw,12px)}
+.weekday .wx{font-size:clamp(15px,1.7vw,21px)}
+.weekday .degree{font-size:clamp(11px,1.05vw,14px)}
+.weekday .low{font-size:clamp(9px,.85vw,11px)}
+.weekday .rain{font-size:clamp(8px,.8vw,10px)}
+@media (orientation:landscape) and (max-height:650px){
+ .top{grid-template-columns:minmax(190px,31%) minmax(0,1fr)}
+ .weatherbox{grid-template-columns:minmax(105px,145px) 30px minmax(0,1fr);gap:5px}
+ .weatherbox .temp{font-size:clamp(38px,5vw,56px)}
+ .weatherbox .emoji{font-size:28px}
+ .weekday{flex-direction:column;gap:1px;padding:3px 0}
+ .weekday .wx{font-size:15px}.weekday .degree{font-size:11px}.weekday .day{font-size:9px}
+ .weekday .low,.weekday .rain{display:none}
+}
+@media (orientation:portrait){
+ .top{grid-template-columns:1fr;gap:14px}
+ .weatherbox{grid-template-columns:minmax(110px,1fr) 40px minmax(0,2fr)}
+ .weekforecast{overflow:hidden}.weekdays{min-width:0;gap:2px}
+ .weekday .low,.weekday .rain{display:none}
+}
+/* v10i: endast framtida vädertillfällen, något större symboler */
+.weekdays{grid-template-columns:repeat(4,minmax(0,1fr));gap:5px}
+.weekday{padding:7px 2px;gap:3px}
+.weekday .day{font-size:clamp(11px,1.1vw,14px)}
+.weekday .wx{font-size:clamp(23px,2.35vw,30px)}
+.weekday .degree{font-size:clamp(13px,1.4vw,18px)}
+.weekday .rain{display:block;font-size:clamp(10px,.95vw,12px)}
+@media (orientation:landscape) and (max-height:650px){.weekday{padding:3px 1px}.weekday .day{font-size:11px}.weekday .wx{font-size:21px}.weekday .degree{font-size:13px}.weekday .rain{display:block;font-size:10px}}
+/* v10o: kompaktare störningsinformation utan att dölja innehåll */
+.flags{gap:4px;margin-top:3px}
+.flag{font-size:clamp(10px,.95vw,12px);padding:2px 6px;line-height:1.2}
+.alertbar{font-size:clamp(11px,1.05vw,14px);padding:5px 10px;line-height:1.2}
+@media (orientation:landscape) and (max-height:650px){.flag{font-size:10px;padding:1px 4px}.alertbar{padding:3px 8px}}
+/* v10q: korrekt inställningsstatus, tydlig röd symbol och diskret nattläge */
+.mins.cancelled-minutes{color:#ff646e;font-size:clamp(24px,2.7vw,36px);font-weight:850;text-shadow:0 0 12px rgba(255,80,90,.12)}
+.cancel-icon{color:#ff646e;font-size:.9em;margin-right:7px;vertical-align:middle}
+body.night{background:#03050a;color:#c8d0df}
+body.night .panel{background:#0b1019;border-color:#1a2230}
+body.night .weekday{background:#111927}
+body.night .entry{border-color:#202937}
+body.night .clock,body.night .departure-time{color:#d4dbea}
+body.night .small,body.night .date,body.night .dateextra,body.night .muted,body.night .meta,body.night .heading,body.night .status,body.night .note{color:#8999b0}
+body.night .mins.urgent-minutes{color:#ff6972}
+body.night .mins.soon-minutes{color:#d7a24d}
+body.night .mins.ok-minutes{color:#70bb94}
+body.night .mins.later-minutes{color:#83a6d0}
+body.night .tag.train{background:#7d3563}
+body.night .tag.metro{background:#2b694c}
+body.night .foot button{background:#172130;border-color:#2c3b50}
+@media (orientation:landscape) and (max-height:650px){.mins.cancelled-minutes{font-size:clamp(21px,2.5vw,30px)}}
+/* v10r: gemensam trafikvarning per trafikslag */
+.panel-alert{display:none;background:#654b22;color:#ffe5ad;border-radius:9px;padding:7px 11px;font-size:clamp(11px,1.1vw,15px);font-weight:650;line-height:1.3;margin:0 0 5px}
+.panel-alert.visible{display:block}
+@media (orientation:landscape) and (max-height:650px){.panel-alert{padding:4px 8px;font-size:11px}}
+</style></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
+const $=id=>document.getElementById(id);const fmtSeconds=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',second:'2-digit'});const fmt=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit'});function isoWeekStockholm(date){
+ const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
+ const get=type=>Number(parts.find(p=>p.type===type)?.value);
+ const day=new Date(Date.UTC(get('year'),get('month')-1,get('day')));
+ const weekday=day.getUTCDay()||7;
+ day.setUTCDate(day.getUTCDate()+4-weekday);
+ const yearStart=new Date(Date.UTC(day.getUTCFullYear(),0,1));
+ return Math.ceil((((day-yearStart)/86400000)+1)/7);
+}
+function tick(){let d=new Date();const stockholmParts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d);const getPart=t=>Number(stockholmParts.find(p=>p.type===t)?.value||0);const minuteOfDay=getPart('hour')*60+getPart('minute');document.body.classList.toggle('night',minuteOfDay>=22*60||minuteOfDay<6*60+30);$('clock').textContent=fmt.format(d);$('date').textContent=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',weekday:'long',day:'numeric',month:'long'}).format(d)+' · Vecka '+isoWeekStockholm(d)}tick();setInterval(tick,1000);
+// Kalender-API: visa bara namnsdag om källan svarar med dagens datum.
+let lastNameDayKey='';async function nameday(){const now=new Date();const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);if(day===lastNameDayKey)return;lastNameDayKey=day;
+ try{const [year,month,date]=day.split('-');const r=await fetch('https://sholiday.faboul.se/dagar/v2.1/'+year+'/'+month+'/'+date,{cache:'no-store'});if(!r.ok)throw Error('kalender');const j=await r.json();const entries=j.dagar||[];const item=entries.find(x=>x.datum===day)||entries[0];const names=item?.namnsdag||[];$('nameday').textContent=names.length?'Namnsdag: '+names.join(', '):''}catch(e){$('nameday').textContent='';lastNameDayKey=''}}nameday();setInterval(nameday,3600000);
+const codes={0:['Klart','☀️'],1:['Mestadels klart','🌤️'],2:['Halvklart','⛅'],3:['Mulet','☁️'],45:['Dimma','🌫️'],48:['Dimma','🌫️'],61:['Regn','🌧️'],63:['Regn','🌧️'],65:['Regn','🌧️'],71:['Snö','🌨️'],73:['Snö','🌨️'],75:['Snö','❄️'],80:['Skurar','🌦️'],81:['Skurar','🌧️'],95:['Åska','⛈️']};async function weather(){try{
+ const url='https://api.open-meteo.com/v1/forecast?latitude=59.236&longitude=18.101&current=temperature_2m,weather_code&minutely_15=precipitation&hourly=temperature_2m,weather_code,precipitation_probability&forecast_days=3&timezone=Europe%2FStockholm';
+ const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);
+ const j=await r.json(),c=j.current,w=codes[c.weather_code]||['Växlande väder','🌤️'];
+ $('temp').textContent=Math.round(c.temperature_2m)+'°';$('weathertext').textContent=w[0];$('weathericon').textContent=w[1];$('weatherstatus').textContent='Uppdaterat '+fmt.format(new Date());
+ const h=j.hourly,box=$('weekdays');
+ if(h&&Array.isArray(h.time)&&h.time.length){
+  // Använd Stockholms lokala klockslag, inte senaste prognostimmens start.
+  // Välj nästa framtida 3-timmarsgräns (00, 03, 06, ...), även efter midnatt.
+  const nowParts=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(new Date());
+  const part=type=>nowParts.find(p=>p.type===type)?.value||'00';
+  const localNow=part('year')+'-'+part('month')+'-'+part('day')+'T'+part('hour')+':'+part('minute');
+  const selected=h.time.map((t,i)=>({t,i})).filter(x=>x.t>localNow&&Number(x.t.slice(11,13))%3===0).slice(0,4).map(x=>x.i);
+  const iconFor=code=>codes[code]?.[1]||(code>=51&&code<=67?'🌧️':code>=71&&code<=86?'🌨️':code>=95?'⛈️':'🌤️');
+  box.innerHTML=selected.map(i=>{
+   const t=h.time[i],temp=h.temperature_2m?.[i],prob=h.precipitation_probability?.[i];
+   const label=t.slice(11,16);const degree=Number.isFinite(Number(temp))&&temp!=null?Math.round(Number(temp))+'°':'–';
+   const rain=prob!=null&&Number.isFinite(Number(prob))?'☂ '+Math.round(Number(prob))+'%':'–';
+   return '<div class="weekday" title="'+t+'"><span class="day">'+label+'</span><span class="wx">'+iconFor(h.weather_code?.[i])+'</span><span class="degree">'+degree+'</span><span class="rain">'+rain+'</span></div>';
+  }).join('');
+ }else box.textContent='Timprognos saknas';
+ const times=j.minutely_15?.time||[],rain=j.minutely_15?.precipitation||[];
+ const localNow=(j.current?.time||'').slice(0,16);const forecast=[];
+ for(let i=0;i<times.length;i++){if(times[i]>=localNow&&times[i]<=new Date(Date.now()+30*60000).toLocaleString('sv-SE',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).replace(' ','T')&&rain[i]!=null&&Number.isFinite(Number(rain[i])))forecast.push(Number(rain[i]));}
+ $('rainnote').textContent=forecast.length?(forecast.some(v=>v>=0.1)?'☔ Regn väntas inom 30 minuter':'☂️ Inget regn väntas närmaste 30 min'):'';
+ }catch(e){$('weathertext').textContent='Väder kan inte hämtas';$('weatherstatus').textContent='Försök igen senare';$('rainnote').textContent='';$('weekdays').textContent='Timprognos kan inte hämtas';}}
+let siteId=null;let cachedTrains=[],cachedMetros=[],lastUpdated=null,loadingDepartures=false;function redrawCountdowns(){if(!lastUpdated)return;show('trains',cachedTrains);show('metros',cachedMetros)}async function getSite(){if(siteId)return siteId;const r=await fetch('https://transport.integration.sl.se/v1/sites');if(!r.ok)throw Error('Stationsregister HTTP '+r.status);const a=await r.json();const matches=a.filter(x=>String(x.name||'').toLowerCase()==='farsta strand');if(!matches.length)throw Error('Farsta strand hittades inte i stationsregistret');siteId=matches[0].id;return siteId}
+function mode(d){return String(d.line?.transport_mode||d.transport_mode||'').toUpperCase()}
+function dest(d){return String(d.destination||d.direction||d.line?.destination||'')}
+function towardsCity(d){const s=dest(d).toLowerCase();return !/södertälje|västerhaninge|nynäshamn|tumba|farsta strand|skarpnäck/.test(s)}
+// Pendeltåg: använd en positiv lista med destinationer norr om Farsta strand.
+// Okända destinationer visas inte som 'mot city' förrän riktningen är verifierad.
+function commuterTowardsCity(d){
+ const s=dest(d).toLocaleLowerCase('sv-SE').trim();
+ // Uteslut alla destinationer söderut från Farsta strand mot Nynäshamn.
+ const southbound=/^(?:trångsund|skogås|vendelsö|handen|jordbro|västerhaninge|krigslida|nynäsgård|ösm[oö]|hemfosa|seger[sä]äng|ösmo|nynäshamn)(?:\b|$)/i;
+ if(southbound.test(s))return false;
+ // Endast kända slutdestinationer i riktning mot Stockholm City.
+ return /^(?:bålsta|kungsängen|kallhäll|jakobsberg|märsta|uppsala(?: c| centralstation)?|upplands väsby|stockholm(?: city| odenplan| centralstation| c)?|solna|sundbyberg)(?:\b|$)/i.test(s);
+}
+function departureDate(d){const s=d.expected||d.scheduled||d.expected_departure_time||d.scheduled_departure_time||d.time;const date=new Date(s);return Number.isFinite(date.getTime())?date:null}
+function scheduledDate(d){const date=new Date(d.scheduled||d.scheduled_departure_time);return Number.isFinite(date.getTime())?date:null}
+function messageText(x){return typeof x==='string'?x:String(x?.message||x?.text||x?.description||x?.consequence||'')}
+function deviations(d){return (Array.isArray(d.deviations)?d.deviations:[]).map(messageText).filter(Boolean)}
+// Endast avgångens egen status avgör om den är inställd.
+// Allmänna störningsmeddelanden kan nämna inställda avgångar utan att denna avgång är inställd.
+function isCancelled(d){return d.cancelled===true || /^(?:CANCELLED|CANCELED|CANCEL|INSTÄLLD|INSTÄLLT)$/i.test(String(d.state||'').trim())}
+function platform(d){const p=d.stop_point?.designation||d.stop_point?.name||d.stop_point_designation||d.platform||d.track;return p==null?'':String(p).trim()}
+function flag(text,cls){const el=document.createElement('span');el.className='flag '+(cls||'');el.textContent=text;return el}
+function urgency(minutes){if(minutes===null)return null;if(minutes<=5)return ['urgent','!','0–5 minuter'];if(minutes<=10)return ['soon','◷','6–10 minuter'];if(minutes<=20)return ['ok','✓','11–20 minuter'];return ['later','●','21 minuter eller mer']}
+function show(id,arr){const node=$(id);node.replaceChildren();
+ const visible=arr.slice(0,3);
+ const alertNode=$(id==='trains'?'train-alert':'metro-alert');
+ const generalNotes=visible.flatMap(d=>deviations(d).filter(t=>!/kort(?:are)? tåg|kort tågsätt|kort pendeltåg/i.test(t)));
+ const counts=new Map();for(const note of generalNotes){const key=note.trim();counts.set(key,(counts.get(key)||0)+1)}
+ const shared=[...counts].filter(([note,count])=>count>=2&&note.length>5).sort((a,b)=>b[1]-a[1]);
+ const common=shared.length?shared[0][0]:'';
+ alertNode.textContent=common?'⚠ '+common:'';alertNode.classList.toggle('visible',!!common);
+if(!arr.length){node.textContent='Inga avgångar hittades i denna riktning';return}
+for(const d of visible){
+ const when=departureDate(d),scheduled=scheduledDate(d),cancelled=isCancelled(d);
+ const minutes=when?Math.max(0,Math.floor((when-Date.now())/60000)):null;
+ const row=document.createElement('div');row.className='entry';
+ const left=document.createElement('div');left.className='left';
+ const name=document.createElement('div');name.className='destination';name.textContent=dest(d)||'Destination saknas';
+ const meta=document.createElement('div');meta.className='meta';
+ const parts=[];const line=d.line?.designation||d.line?.name;if(line)parts.push('Linje '+line);
+ // Spår/läge döljs för en renare avgångstavla.
+ meta.textContent=parts.join(' · ');
+ left.append(name,meta);
+ const notes=deviations(d),flags=document.createElement('div');flags.className='flags';
+ if(notes.some(t=>/kort(?:are)? tåg|kort tågsätt|kort pendeltåg/i.test(t)))flags.append(flag('Kort tåg','warn'));
+ const delay=(when&&scheduled)?Math.round((when-scheduled)/60000):0;
+
+ for(const note of notes.filter(t=>!/kort(?:are)? tåg|kort tågsätt|kort pendeltåg/i.test(t)).slice(0,1)){
+   if(note.trim()!==common && note.length<95 && !cancelled)flags.append(flag(note,'warn'));
+ }
+ if(flags.childNodes.length)left.append(flags);
+ const right=document.createElement('div');right.className='right';const group=document.createElement('div');group.className='timegroup';
+ const u=!cancelled?urgency(minutes):null;
+ const mins=document.createElement('div');mins.className='mins'+(!cancelled&&u?' '+u[0]+'-minutes':'');if(cancelled){mins.classList.add('cancelled-minutes');const icon=document.createElement('span');icon.className='cancel-icon';icon.textContent='✖';icon.setAttribute('aria-hidden','true');mins.append(icon,document.createTextNode('INSTÄLLD'));}else{mins.textContent=minutes===null?(String(d.display||'')||'--'):minutes+' min';}group.append(mins);right.append(group);
+ if(when){
+   const dep=document.createElement('div');dep.className='departure-time';
+   const caption=document.createElement('span');caption.className='time-caption';caption.textContent='Avgår';dep.append(caption);
+   if(scheduled&&Math.abs(when-scheduled)>=60000){const original=document.createElement('span');original.className='original-time';original.textContent=fmt.format(scheduled);dep.append(original)}
+   const current=document.createElement('span');current.textContent=fmt.format(when);dep.append(current);right.append(dep);
+   if(delay>=1&&!cancelled){const info=document.createElement('div');info.className='delay-detail';info.textContent='+'+delay+' min försenat';right.append(info)}
+ }
+ row.append(left,right);node.append(row);
+}}
+async function fetchAlerts(id,stopDeviations){const bar=$('alerts');let texts=[];
+ if(Array.isArray(stopDeviations))texts.push(...stopDeviations.map(x=>messageText(x.deviation||x)).filter(Boolean));
+ try{const r=await fetch('https://deviations.integration.sl.se/v1/messages?site='+encodeURIComponent(id));if(r.ok){const j=await r.json();const a=Array.isArray(j)?j:Array.isArray(j.messages)?j.messages:[];texts.push(...a.map(x=>messageText(x)).filter(Boolean))}}catch(e){}
+ texts=[...new Set(texts)].filter(x=>x.length>5).slice(0,2);
+ const important=texts.filter(t=>/inställ|försen|stopp|avbrott|ersättningsbuss|trafikstörning|begränsad trafik|kort tåg/i.test(t));const relevant=important.length?important:texts;
+ bar.textContent=relevant.length?'⚠ Trafikinfo: '+relevant.join('  •  '):'';bar.style.display=relevant.length?'block':'none';bar.classList.toggle('critical',relevant.some(t=>/inställ|stopp|avbrott/i.test(t)));
+}
+async function departures(){if(loadingDepartures)return;loadingDepartures=true;try{if(!lastUpdated)$('status').textContent='Hämtar SL-avgångar …';$('status').className='status';const id=await getSite();const r=await fetch('https://transport.integration.sl.se/v1/sites/'+encodeURIComponent(id)+'/departures',{cache:'no-store'});if(!r.ok)throw Error('SL svarade HTTP '+r.status);const j=await r.json();const all=Array.isArray(j.departures)?j.departures:[];const sorted=all.sort((a,b)=>(departureDate(a)?.getTime()||Infinity)-(departureDate(b)?.getTime()||Infinity));const north=sorted.filter(towardsCity);cachedTrains=sorted.filter(d=>mode(d)==='TRAIN'&&commuterTowardsCity(d));cachedMetros=north.filter(d=>mode(d)==='METRO'&&String(d.line?.designation||d.line?.name||'18').includes('18'));lastUpdated=new Date();redrawCountdowns();$('status').textContent='SL uppdaterat '+fmtSeconds.format(lastUpdated);fetchAlerts(id,j.stop_deviations)}catch(e){if(!lastUpdated){$('trains').textContent='Avgångarna kan inte hämtas just nu';$('metros').textContent='Avgångarna kan inte hämtas just nu'}$('status').className='error';$('status').textContent='SL-fel: '+e.message+(lastUpdated?' · Senast '+fmtSeconds.format(lastUpdated):'')}finally{loadingDepartures=false}}
+$('refresh').addEventListener('click',()=>{weather();departures()});weather();departures();setInterval(weather,600000);setInterval(departures,15000);setInterval(redrawCountdowns,1000);
+</script></body></html>
