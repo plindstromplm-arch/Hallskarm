@@ -157,6 +157,13 @@ body.night .foot button{background:#172130;border-color:#2c3b50}
 .airradar-item span{display:block;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:12px;color:#b8c6d9}
 .airradar-message{color:#aab4c6;font-size:13px;min-width:0}
 .airradar-meta{margin-left:auto;flex:0 0 auto;color:#8ea3be;font-size:11px;text-align:right;white-space:nowrap}
+/* Kompakt tomt läge: ge mer utrymme åt SL-korten */
+.airradar.is-empty{min-height:34px;padding:5px 12px;gap:10px;margin-top:5px}
+.airradar.is-empty .airradar-title{font-size:12px}
+.airradar.is-empty .airradar-title small{display:none}
+.airradar.is-empty .airradar-message{font-size:12px}
+.airradar.is-empty .airradar-meta{font-size:10px}
+@media(orientation:portrait){.airradar.is-empty{flex-wrap:nowrap}.airradar.is-empty .airradar-list{flex-basis:auto;order:0}}
 body.night .airradar{background:#0b1019;border-color:#1a2230}body.night .airradar-item{background:#152031}
 @media(orientation:landscape) and (max-height:650px){.airradar{min-height:43px;margin-top:5px;padding:5px 10px}.airradar-item{padding:4px 7px}.airradar-title small{font-size:10px}}
 @media(orientation:portrait){.airradar{flex-wrap:wrap}.airradar-list{flex-basis:100%;order:3}.airradar-meta{margin-left:auto}}
@@ -293,7 +300,7 @@ const AIR_LAT=59.236,AIR_LON=18.101,AIR_RADIUS_KM=5;
 let airLoading=false;
 function airDistanceKm(lat,lon){const rad=Math.PI/180,a=Math.sin((lat-AIR_LAT)*rad/2)**2+Math.cos(AIR_LAT*rad)*Math.cos(lat*rad)*Math.sin((lon-AIR_LON)*rad/2)**2;return 12742*Math.asin(Math.min(1,Math.sqrt(a)))}
 function airDirection(deg){if(!Number.isFinite(deg))return '';return ['N','NO','Ö','SO','S','SV','V','NV'][Math.round(deg/45)%8]}
-function renderAircraft(planes){const box=$('aircraft');box.replaceChildren();if(!planes.length){const msg=document.createElement('span');msg.className='airradar-message';msg.textContent='Inga rapporterade flygplan inom 5 km';box.append(msg);return}
+function renderAircraft(planes){const box=$('aircraft');box.closest('.airradar').classList.toggle('is-empty',!planes.length);box.replaceChildren();if(!planes.length){const msg=document.createElement('span');msg.className='airradar-message';msg.textContent='Inga rapporterade flygplan inom 5 km';box.append(msg);return}
  for(const p of planes.slice(0,3)){const item=document.createElement('div');item.className='airradar-item';const name=document.createElement('strong');name.textContent='✈ '+(p.flight||p.r||p.hex||'Okänt flyg');const detail=document.createElement('span');const alt=Number.isFinite(p.alt_m)?Math.round(p.alt_m)+' m höjd':'Höjd okänd';detail.textContent=p.distance.toFixed(1).replace('.',',')+' km bort · '+alt+(p.track!=null?' · '+airDirection(p.track):'');item.append(name,detail);box.append(item)}
  if(planes.length>3){const more=document.createElement('span');more.className='airradar-message';more.textContent='+'+(planes.length-3)+' till';box.append(more)}
 }
@@ -306,7 +313,7 @@ async function aircraft(){if(airLoading)return;airLoading=true;const status=$('a
  const data=await response.json();if(!Array.isArray(data.ac))throw Error('Felaktigt datasvar');
  const planes=data.ac.map(p=>{const lat=Number(p.lat),lon=Number(p.lon);if(!Number.isFinite(lat)||!Number.isFinite(lon))return null;const distance=airDistanceKm(lat,lon);if(distance>AIR_RADIUS_KM||p.ground===true||p.alt_baro==='ground')return null;const feet=Number(p.alt_geom??p.alt_baro);return {...p,distance,alt_m:Number.isFinite(feet)?feet*0.3048:null,flight:String(p.flight||'').trim(),track:Number.isFinite(Number(p.track))?Number(p.track):null}}).filter(Boolean).sort((a,b)=>a.distance-b.distance);
  renderAircraft(planes);status.textContent='Uppdaterat '+fmt.format(new Date())+' · ADSB.lol';
- }catch(e){$('aircraft').replaceChildren();const msg=document.createElement('span');msg.className='airradar-message';msg.textContent='Flygdata kan inte hämtas just nu';$('aircraft').append(msg);status.textContent='Datakälla ej tillgänglig';}finally{airLoading=false}}
+ }catch(e){$('aircraft').closest('.airradar').classList.remove('is-empty');$('aircraft').replaceChildren();const msg=document.createElement('span');msg.className='airradar-message';msg.textContent='Flygdata kan inte hämtas just nu';$('aircraft').append(msg);status.textContent='Datakälla ej tillgänglig';}finally{airLoading=false}}
 aircraft();setInterval(aircraft,30000);
 </script>
 </body></html>
