@@ -166,15 +166,16 @@ body.hue-open .wrap{visibility:hidden}
 .hue-scenes{display:flex;gap:12px;flex-wrap:wrap;margin-top:14px}
 .hue-scenes button{border:1px solid #46536c;background:#222c3d;color:white;border-radius:12px;padding:13px 18px;font:inherit;cursor:pointer}
 @media(max-width:650px){.hue-grid{grid-template-columns:1fr}.hue-launch{right:8px;top:8px;padding:7px 9px}.hue-room{padding:18px}}
+
+/* Hue v2: three simple actions */
+.hue-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:17px;margin-top:24px}
+.hue-action{min-height:225px;border:1px solid #46536c;background:#202a39;color:#f5f6fa;border-radius:23px;padding:25px 18px;display:flex;flex-direction:column;align-items:flex-start;justify-content:center;gap:13px;text-align:left;cursor:pointer;font:inherit}
+.hue-action.warm{background:#3a3027;border-color:#6c5437}.hue-action.active{background:#58472b;border-color:#c79b50}
+.hue-symbol{font-size:42px;color:#f3c36a;line-height:1}.hue-action strong{font-size:clamp(21px,2.3vw,29px)}.hue-action small{font-size:clamp(13px,1.3vw,16px);color:#b9c6d8}
+.hue-info{color:#b9c6d8;margin-top:22px;font-size:15px}
+@media(max-width:650px){.hue-actions{grid-template-columns:1fr;gap:12px}.hue-action{min-height:130px;padding:17px;gap:6px}.hue-symbol{font-size:28px}}
 </style></head><body><button class="hue-launch" id="hue-launch" aria-label="Öppna belysning" title="Belysning">💡</button>
-<section class="hue-view" id="hue-view" aria-label="Philips Hue, designförslag">
- <div class="hue-inner">
-  <div class="hue-header"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="hue-title">💡 Belysning</div></div><button class="hue-back" id="hue-back">← Till hallskärmen</button></div>
-  <div class="hue-demo">Designförslag · Knapparna fungerar som demonstration och styr inte dina riktiga Hue-lampor.</div>
-  <div class="hue-grid" id="hue-grid"></div>
-  <div class="hue-room" style="margin-top:16px"><div class="hue-room-name">Scener</div><div class="hue-scenes"><button data-scene="evening">🌙 Kväll</button><button data-scene="bright">☀️ Full belysning</button><button data-scene="off">◯ Släck allt</button></div></div>
- </div>
-</section><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
+<section class="hue-view" id="hue-view" aria-label="Philips Hue snabbpanel"><div class="hue-inner"><div class="hue-header"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="hue-title">💡 Belysning</div></div><button class="hue-back" id="hue-back">← Till hallskärmen</button></div><div class="hue-demo">Förhandsvisning · Knapparna visar hur styrningen kommer att fungera. Inga riktiga lampor påverkas ännu.</div><div class="hue-actions"><button class="hue-action" id="hue-home"><span class="hue-symbol">⌂</span><strong>Släck hemmet</strong><small>Alla utom Akvarium</small></button><button class="hue-action warm" id="hue-cozy"><span class="hue-symbol">✦</span><strong>Tänd mys</strong><small>4 utvalda lampor</small></button><button class="hue-action warm" id="hue-balcony"><span class="hue-symbol">☀</span><strong>Tänd balkongen</strong><small>Endast Balkong uttag</small></button></div><div class="hue-info" id="hue-info" role="status">Välj en knapp för att testa designen.</div></div></section><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg</div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18</div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
 const $=id=>document.getElementById(id);const fmtSeconds=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',second:'2-digit'});const fmt=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit'});function isoWeekStockholm(date){
  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
  const get=type=>Number(parts.find(p=>p.type===type)?.value);
@@ -302,27 +303,17 @@ async function departures(){if(loadingDepartures)return;loadingDepartures=true;t
 $('refresh').addEventListener('click',()=>{weather();departures()});weather();departures();setInterval(weather,600000);setInterval(departures,15000);setInterval(redrawCountdowns,1000);
 </script>
 <script>
-/* Fristående prototyp: ingen Hue-anslutning och inga nycklar */
+/* Fristående designprototyp: inga anrop till Hue Bridge */
 (function(){
-const rooms=[{name:'Vardagsrum',on:true,level:65},{name:'Kök',on:false,level:75},{name:'Sovrum',on:false,level:35},{name:'Hall',on:true,level:80}];
-const grid=document.getElementById('hue-grid');
-function render(){
- grid.replaceChildren();
- rooms.forEach((room,i)=>{
- const card=document.createElement('article');card.className='hue-room';
- const top=document.createElement('div');top.className='hue-room-top';
- const name=document.createElement('div');name.className='hue-room-name';name.textContent='💡 '+room.name;
- const button=document.createElement('button');button.className='hue-toggle'+(room.on?' on':'');button.textContent=room.on?'Tänd':'Släckt';button.setAttribute('aria-label','Växla '+room.name);button.onclick=()=>{room.on=!room.on;render()};
- top.append(name,button);
- const status=document.createElement('div');status.className='hue-room-state';status.textContent=room.on?'Ljusstyrka '+room.level+' %':'Lamporna är släckta';
- const range=document.createElement('input');range.type='range';range.min='1';range.max='100';range.value=room.level;range.setAttribute('aria-label','Ljusstyrka '+room.name);range.oninput=()=>{room.level=Number(range.value);room.on=true;status.textContent='Ljusstyrka '+room.level+' %';button.textContent='Tänd';button.classList.add('on')};
- card.append(top,status,range);grid.append(card);
- });
-}
-document.getElementById('hue-launch').onclick=()=>{document.body.classList.add('hue-open');render()};
-document.getElementById('hue-back').onclick=()=>document.body.classList.remove('hue-open');
-document.querySelectorAll('[data-scene]').forEach(button=>button.onclick=()=>{const scene=button.dataset.scene;rooms.forEach(room=>{room.on=scene!=='off';if(scene==='evening')room.level=35;if(scene==='bright')room.level=100});render()});
-render();
+ const state={cozy:false,balcony:false};
+ const cozy=document.getElementById('hue-cozy'),balcony=document.getElementById('hue-balcony'),info=document.getElementById('hue-info');
+ function render(){cozy.querySelector('strong').textContent=state.cozy?'Släck mys':'Tänd mys';balcony.querySelector('strong').textContent=state.balcony?'Släck balkongen':'Tänd balkongen';cozy.classList.toggle('active',state.cozy);balcony.classList.toggle('active',state.balcony)}
+ document.getElementById('hue-launch').onclick=()=>document.body.classList.add('hue-open');
+ document.getElementById('hue-back').onclick=()=>document.body.classList.remove('hue-open');
+ document.getElementById('hue-home').onclick=()=>{state.cozy=false;state.balcony=false;render();info.textContent='Demo: Hemmets valda lampor släcks. Akvarium undantas. Ingen riktig lampa har ändrats.'};
+ cozy.onclick=()=>{state.cozy=!state.cozy;render();info.textContent='Demo: Mys '+(state.cozy?'tänds med senast använda ljusstyrka och färg':'släcks')+'. Ingen riktig lampa har ändrats.'};
+ balcony.onclick=()=>{state.balcony=!state.balcony;render();info.textContent='Demo: Balkong uttag '+(state.balcony?'tänds':'släcks')+'. Balkong Ljusslinga påverkas inte.'};
+ render();
 })();
 </script>
 </body></html>
