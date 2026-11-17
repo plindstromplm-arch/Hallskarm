@@ -219,6 +219,11 @@ body.night .foot button{background:#172130;border-color:#2c3b50}
 .trip-results{gap:9px}.trip-card{padding:11px 13px;border-radius:14px}.trip-card-head{margin-bottom:4px}.trip-card-head strong{font-size:clamp(17px,1.8vw,22px)}.trip-leg{padding:6px 0;gap:6px}.trip-leg strong{font-size:clamp(16px,1.8vw,22px)}.trip-leg small{font-size:11px}.trip-arrival{font-size:15px;margin-top:3px}.trip-warning{font-size:11px;margin-top:4px}.trip-note{font-size:clamp(11px,1vw,13px);margin-bottom:7px}.trip-controls{margin:3px 0 9px}
 @media(max-width:700px){.trip-results{gap:9px}.trip-card{padding:10px 11px}.trip-card-head{margin-bottom:3px}.trip-leg{padding:6px 0;grid-template-columns:minmax(0,1fr) auto auto;gap:5px}.trip-leg strong{font-size:17px}.trip-leg small{font-size:10px}.trip-arrival{font-size:15px}.trip-note{line-height:1.3}}
 
+/* Aktiv sidflik: diskret mörkblå med veckodagens accentlinje. */
+.page-switch button,body.night .page-switch button{position:relative;overflow:hidden;background:#202b3c;color:#d8e2f1;border-color:#3b4b62}
+.page-switch button.active,body.night .page-switch button.active{background:#263b4b;color:#fff;border-color:#526477;font-weight:750}
+.page-switch button.active::after{content:"";position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--day-accent);border-radius:0 0 8px 8px}
+
 /* Blå uppdateringsknapp på alla skärmar, även nattläge och mobil. */
 .foot #refresh,body.night .foot #refresh{background:#1768c4;border-color:#3989e5;color:#fff;font-weight:700;cursor:pointer}
 .foot #refresh:active{background:#0d4e9c}
