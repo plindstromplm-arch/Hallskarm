@@ -173,6 +173,65 @@ body.night .airradar{background:#0b1019;border-color:#1a2230}body.night .airrada
 .local-title{font-size:clamp(19px,2.5vw,32px);font-weight:750;margin:8px 0 13px}.local-cards{flex:1;min-height:0}.local-cards .panel{min-height:0}.local-head{font-size:clamp(18px,2.1vw,28px);font-weight:750;margin-bottom:8px}.local-route{font-size:clamp(12px,1.3vw,17px);color:#aab4c6;margin-bottom:10px}.local-list{flex:1;min-height:0;display:flex;flex-direction:column;justify-content:flex-start;overflow:auto}.local-row{display:flex;justify-content:space-between;align-items:center;gap:12px;border-bottom:1px solid #343a49;padding:clamp(9px,1.4vh,17px) 0}.local-row:last-child{border:0}.local-left{min-width:0}.local-line{display:inline-block;padding:5px 10px;border-radius:8px;background:#387d5d;color:white;font-size:clamp(17px,2vw,24px);font-weight:800;margin-right:9px}.local-line.bus{background:#316ea3}.local-dest{font-size:clamp(14px,1.6vw,20px);font-weight:600}.local-sub{font-size:12px;color:#b5c1d3;margin-top:5px}.local-right{text-align:right;flex-shrink:0}.local-mins{font-size:clamp(26px,3.4vw,43px);font-weight:850;font-variant-numeric:tabular-nums}.local-time{font-size:clamp(16px,2vw,24px);font-weight:750}.local-info{font-size:12px;color:#aab4c6;margin-top:7px}.local-error{font-size:15px;color:#ffb6a9;padding:16px 0}.local-empty{font-size:16px;color:#aab4c6;padding:16px 0}
 @media(orientation:landscape) and (max-height:650px){.local-title{margin:2px 0 7px}.local-row{padding:5px 0}.local-sub{margin-top:1px}.local-head{margin-bottom:2px}.local-route{margin-bottom:3px}.page-switch button{padding:5px 11px}}
 @media(max-width:650px){.page-switch button{padding:7px 9px;font-size:12px}.local-cards{grid-template-columns:1fr}.local-cards .panel{min-height:300px}}
+/* Mobilanpassning 2026-11-17: gäller telefonstorlekar, bevarar iPad-layouten. */
+@media (max-width:700px) {
+ html,body{height:auto;min-height:100%;overflow-x:hidden;overflow-y:auto;-webkit-text-size-adjust:100%}
+ body{padding:12px max(12px,env(safe-area-inset-right)) calc(16px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+ .wrap{height:auto;min-height:calc(100dvh - 28px);max-width:100%;gap:0}
+ .top{display:flex;flex-direction:column;align-items:stretch;gap:12px;margin-bottom:12px;padding:0 2px}
+ .top>div:first-child{min-width:0}
+ .small{font-size:11px;letter-spacing:1.5px}
+ .clock{font-size:clamp(62px,17vw,86px);line-height:1;letter-spacing:-.05em}
+ .date{font-size:15px;margin-top:3px}.dateextra{font-size:12px}
+ .weatherbox{display:grid;grid-template-columns:minmax(0,1fr) 44px;gap:8px 10px;align-items:center;width:100%;min-width:0}
+ .weatherbox>div:first-child{min-width:0}.weatherbox .temp{font-size:48px}
+ .weatherbox .muted{font-size:15px}.weatherbox .emoji{font-size:36px;text-align:center}
+ .weatherbox .weatherstatus,.weatherbox .rainnote{font-size:11px}.suninfo{font-size:11px}
+ .weekforecast{grid-column:1/-1;width:100%;overflow:visible;margin:0;min-width:0}
+ .weekdays{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:5px;min-width:0}
+ .weekday{min-width:0;padding:6px 2px}.weekday .day{font-size:11px}.weekday .wx{font-size:23px}.weekday .degree{font-size:13px}.weekday .rain{font-size:10px}
+ .page,.page.active{flex:0 0 auto;min-height:0}.cards,.local-cards{display:grid;grid-template-columns:minmax(0,1fr);gap:12px;flex:0 0 auto;min-height:0}
+ .panel,.local-cards .panel{min-height:0;padding:15px;border-radius:17px}
+ .heading{font-size:12px;margin-bottom:8px}.mode{font-size:clamp(20px,5.8vw,26px);gap:9px;margin-bottom:8px}
+ .tag{padding:5px 9px;border-radius:8px}.vehicle-art{width:clamp(76px,24vw,108px);height:54px;object-fit:cover}
+ #trains,#metros{display:block;flex:none;min-height:0}
+ .entry{min-height:0;padding:12px 0;gap:8px}.entry .left{min-width:0}.entry .right{min-width:0;flex-shrink:0}
+ .destination{font-size:clamp(17px,4.8vw,22px);overflow-wrap:anywhere}.meta,.sub{font-size:12px}
+ .mins{font-size:clamp(24px,7vw,33px)}.departure-time{font-size:clamp(19px,5.5vw,27px)}
+ .time-caption{font-size:10px;margin-right:4px}.original-time{font-size:11px;margin-right:4px}.delay-detail{font-size:11px}
+ .timegroup{gap:5px}.timebadge{width:23px;height:23px;font-size:13px}
+ .flags{gap:3px}.flag{font-size:10px;padding:2px 5px}
+ .airradar{margin-top:11px;padding:10px 12px;gap:7px;flex-wrap:wrap;min-height:0}
+ .airradar-title{font-size:13px}.airradar-list{flex-basis:100%;order:3;flex-wrap:wrap;overflow:visible}
+ .airradar-item{flex:1 1 145px;max-width:none}.airradar-meta{font-size:10px}
+ .airradar.is-empty{flex-wrap:wrap;gap:5px;padding:8px 10px}
+ .airradar.is-empty .airradar-list{flex:1 1 100%;order:3}.airradar.is-empty .airradar-meta{margin-left:auto}
+ .local-title{font-size:clamp(19px,5vw,24px);line-height:1.25;margin:3px 0 12px}
+ .local-head{font-size:clamp(18px,5vw,23px);line-height:1.25}.local-route{font-size:12px;margin-bottom:7px}
+ .local-list{display:block;overflow:visible;flex:none}.local-row{gap:8px;padding:12px 0}
+ .local-line{font-size:17px;padding:4px 8px;margin-right:6px}.local-dest{font-size:clamp(14px,4vw,18px);overflow-wrap:anywhere}
+ .local-mins{font-size:clamp(23px,6.5vw,31px)}.local-time{font-size:18px}.local-sub{font-size:11px}
+ .local-info{font-size:11px;line-height:1.4;margin-top:9px}
+ .foot{display:flex;flex-wrap:wrap;gap:9px;margin-top:14px;padding-bottom:4px;align-items:center}
+ .foot>div:first-child{flex:1 1 100%;min-width:0}.status,.note{font-size:11px}
+ .page-switch{display:flex;flex:1 1 auto;gap:8px;margin-left:0}.page-switch button{flex:1;min-height:44px;font-size:14px;padding:10px 12px}
+ .foot #refresh{min-height:44px;font-size:13px;padding:10px 12px;white-space:nowrap}
+ .alertbar{max-height:none;overflow:visible;font-size:12px}
+}
+/* Telefon i liggande läge: låt innehållet scrolla och undvik iPadens höjdlåsning. */
+@media (orientation:landscape) and (max-height:500px) and (max-width:950px) {
+ html,body{height:auto;overflow-x:hidden;overflow-y:auto}
+ body{padding:10px max(12px,env(safe-area-inset-right)) calc(12px + env(safe-area-inset-bottom)) max(12px,env(safe-area-inset-left))}
+ .wrap{height:auto;min-height:0}.top{display:grid;grid-template-columns:minmax(180px,32%) minmax(0,1fr);gap:12px;align-items:center}
+ .clock{font-size:clamp(52px,8vw,70px)}.weatherbox{display:grid;grid-template-columns:minmax(90px,1fr) 35px minmax(0,2fr);gap:5px}
+ .weatherbox .temp{font-size:38px}.weatherbox .emoji{font-size:28px}.weekforecast{grid-column:auto}
+ .weekdays{grid-template-columns:repeat(4,minmax(0,1fr))}.weekday .wx{font-size:17px}.weekday .rain{display:none}
+ .page,.page.active{flex:none}.cards,.local-cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;flex:none}
+ .panel,.local-cards .panel{min-height:0;padding:12px}.entry{min-height:0;padding:9px 0}.destination{font-size:16px}
+ .mins{font-size:26px}.departure-time{font-size:21px}.mode{font-size:20px}.vehicle-art{width:74px;height:45px}
+ #trains,#metros,.local-list{display:block;flex:none;overflow:visible}.local-row{padding:9px 0}.local-mins{font-size:25px}
+ .foot{flex-wrap:wrap}.page-switch button,.foot #refresh{min-height:40px}
+}
 </style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: David Gubler, https://commons.wikimedia.org/wiki/File:SL_C20_Gamla_Stan,_Stockholm.jpg (se filens licensvillkor). --></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div id="page1" class="page active"><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ny_pendeltag_stockholm.jpg?width=420" alt="Foto av X60-pendeltåg" loading="eager" referrerpolicy="no-referrer"></div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/SL_C20_Gamla_Stan%2C_Stockholm.jpg?width=420" alt="Foto av C20-tunnelbana" loading="eager" referrerpolicy="no-referrer"></div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><section class="airradar" aria-label="Flygplan inom fem kilometer från Farsta strand"><div class="airradar-title">✈ Flygplan nära oss<small>Inom 5 km · Farsta strand</small></div><div id="aircraft" class="airradar-list" aria-live="polite"><span class="airradar-message">Söker flygplan …</span></div><div class="airradar-meta" id="aircraft-status">Live · var 30:e sek</div></section><div class="alertbar" id="alerts" role="status"></div></div><div id="page2" class="page"><div class="local-title">🚇 🚌 Lokaltrafik · Farsta centrum ↔ Farsta strand</div><div class="cards local-cards"><section class="panel"><div class="local-head">Farsta centrum → Farsta strand</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-strand">Hämtar avgångar …</div></section><section class="panel"><div class="local-head">Farsta strand → Farsta centrum</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-centrum">Hämtar avgångar …</div></section></div><div class="local-info" id="local-status">Avgångar från SL · Uppdateras var 15:e sekund · Visar endast verifierad riktning</div></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><div class="page-switch"><button id="switch1" class="active" type="button">Sida 1</button><button id="switch2" type="button">Sida 2</button></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
 const $=id=>document.getElementById(id);const fmtSeconds=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',second:'2-digit'});const fmt=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit'});function isoWeekStockholm(date){
  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
