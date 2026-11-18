@@ -227,7 +227,38 @@ body.night .foot button{background:#172130;border-color:#2c3b50}
 /* Blå uppdateringsknapp på alla skärmar, även nattläge och mobil. */
 .foot #refresh,body.night .foot #refresh{background:#1768c4;border-color:#3989e5;color:#fff;font-weight:700;cursor:pointer}
 .foot #refresh:active{background:#0d4e9c}
-</style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: David Gubler, https://commons.wikimedia.org/wiki/File:SL_C20_Gamla_Stan,_Stockholm.jpg (se filens licensvillkor). --></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div id="page1" class="page active"><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ny_pendeltag_stockholm.jpg?width=420" alt="Foto av X60-pendeltåg" loading="eager" referrerpolicy="no-referrer"></div><div id="train-alert" class="panel-alert" role="status"></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana 18<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/SL_C20_Gamla_Stan%2C_Stockholm.jpg?width=420" alt="Foto av C20-tunnelbana" loading="eager" referrerpolicy="no-referrer"></div><div id="metro-alert" class="panel-alert" role="status"></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div></div><div id="page2" class="page"><div class="local-title">🚇 🚌 Lokaltrafik · Farsta centrum ↔ Farsta strand</div><div class="cards local-cards"><section class="panel"><div class="local-head">Farsta centrum → Farsta strand</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-strand">Hämtar avgångar …</div></section><section class="panel"><div class="local-head">Farsta strand → Farsta centrum</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-centrum">Hämtar avgångar …</div></section></div><div class="local-info" id="local-status">Avgångar från SL · Uppdateras var 15:e sekund · Visar endast verifierad riktning</div></div><div id="page3" class="page"><div class="local-title">🚆 Pendelresa · Farsta strand ↔ Solna</div><div class="trip-controls"><button type="button" id="trip-out" class="active">Till Solna</button><button type="button" id="trip-home">Hem till Farsta strand</button></div><div class="trip-note">Avgångar från SL i realtid. Ankomsttider och bytestider är <strong>uppskattningar</strong> utifrån ungefärliga restider, inte bekräftade tidtabellsankomster. Kontrollera plattform och anslutning i SL innan du reser.</div><div class="trip-results" id="trip-results"><div class="note">Välj riktning för att hämta resor …</div></div><div class="local-info" id="trip-status">Endast aktiv sida uppdateras.</div></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><div class="page-switch"><button id="switch1" class="active" type="button">Hem</button><button id="switch2" type="button">Farsta C</button><button id="switch3" type="button">Solna</button></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
+
+/* SL-inspirerad kompakt avgångstavla på Hem, övriga sidor oförändrade */
+#page1 .panel{background:#0b121d;border-color:#52677d;border-radius:17px}
+#page1 .heading{font-size:clamp(11px,1vw,14px);margin-bottom:3px;letter-spacing:.06em}
+#page1 .mode{margin-bottom:5px;font-size:clamp(20px,2.4vw,31px)}
+#page1 .vehicle-art{height:clamp(39px,5.2vw,58px);width:clamp(70px,8vw,110px)}
+#page1 .sl-columns{display:grid;grid-template-columns:54px minmax(0,1fr) minmax(100px,auto) minmax(78px,auto);align-items:center;gap:8px;padding:7px 8px;background:#263a50;border-radius:7px;color:#e5edf8;font-size:clamp(11px,1.1vw,15px);font-weight:700}
+#page1 .sl-columns span:nth-child(n+3){text-align:right}
+#page1 #trains,#page1 #metros{justify-content:space-evenly}
+#page1 .entry{display:grid;grid-template-columns:54px minmax(0,1fr) minmax(100px,auto) minmax(78px,auto);gap:8px;padding:5px 8px;min-height:0;border-bottom:1px solid #344a60}
+#page1 .entry .left,#page1 .entry .right{display:contents}
+#page1 .sl-line{background:#b14588;color:white;border-radius:7px;text-align:center;font-weight:800;font-size:clamp(17px,1.8vw,25px);padding:5px 2px}
+#page1 #metros .sl-line{background:#277fba}
+#page1 .sl-detail{min-width:0}
+#page1 .destination{font-size:clamp(16px,1.85vw,25px);line-height:1.12;overflow-wrap:anywhere}
+#page1 .meta{display:none}
+#page1 .flags{margin-top:2px}
+#page1 .timegroup{justify-content:flex-end}
+#page1 .mins,#page1 .departure-time{font-size:clamp(17px,2.05vw,28px);line-height:1.15;margin:0;font-weight:800;text-align:right}
+#page1 .departure-time{white-space:nowrap}
+#page1 .time-caption{display:none}
+#page1 .original-time{font-size:clamp(10px,.9vw,12px);display:block;margin:0}
+#page1 .delay-detail{grid-column:3 / 5;text-align:right;margin-top:-7px}
+@media(max-width:700px){#page1 .sl-columns,#page1 .entry{grid-template-columns:37px minmax(0,1fr) minmax(65px,auto) minmax(61px,auto);gap:4px;padding:8px 3px}#page1 .sl-columns{font-size:10px}#page1 .sl-line{font-size:14px;padding:5px 1px}#page1 .destination{font-size:clamp(13px,3.8vw,18px)}#page1 .mins,#page1 .departure-time{font-size:clamp(14px,4vw,19px)}#page1 .vehicle-art{height:43px;width:76px}}
+
+/* Störningar placeras på en egen, kompakt rad under avgångens fyra kolumner. */
+#page1 .sl-disruption{grid-column:1 / -1;display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:0 0 3px 0;min-width:0}
+#page1 .sl-disruption .flags{margin:0;min-width:0}
+#page1 .sl-disruption .delay-detail{grid-column:auto;text-align:left;margin:0;font-size:clamp(11px,1.05vw,14px)}
+#page1 .sl-disruption .flag{font-size:clamp(10px,.95vw,12px);line-height:1.2}
+@media(max-width:700px){#page1 .sl-disruption{padding-bottom:2px;gap:5px}#page1 .sl-disruption .delay-detail{font-size:11px}}
+</style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: David Gubler, https://commons.wikimedia.org/wiki/File:SL_C20_Gamla_Stan,_Stockholm.jpg (se filens licensvillkor). --></head><body><main class="wrap"><header class="top"><div><div class="small">LINDSTRÖMS · FARSTA STRAND</div><div class="clock" id="clock">--:--</div><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div><div class="weatherbox"><div><div class="temp" id="temp">--°</div><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div><div class="suninfo" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="emoji" id="weathericon">☁️</div><section class="weekforecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section></div></header><div id="page1" class="page active"><div class="cards"><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag train">J</span>Pendeltåg<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/Ny_pendeltag_stockholm.jpg?width=420" alt="Foto av X60-pendeltåg" loading="eager" referrerpolicy="no-referrer"></div><div id="train-alert" class="panel-alert" role="status"></div><div class="sl-columns"><span>Linje</span><span>Destination</span><span>Avgår om</span><span>Avgår</span></div><div id="trains" class="note">Hämtar avgångar …</div></section><section class="panel"><div class="heading">FARSTA STRAND · MOT CITY</div><div class="mode"><span class="tag metro">T</span>Tunnelbana<img class="vehicle-art" src="https://commons.wikimedia.org/wiki/Special:FilePath/SL_C20_Gamla_Stan%2C_Stockholm.jpg?width=420" alt="Foto av C20-tunnelbana" loading="eager" referrerpolicy="no-referrer"></div><div id="metro-alert" class="panel-alert" role="status"></div><div class="sl-columns"><span>Linje</span><span>Destination</span><span>Avgår om</span><span>Avgår</span></div><div id="metros" class="note">Hämtar avgångar …</div></section></div><div class="alertbar" id="alerts" role="status"></div></div><div id="page2" class="page"><div class="local-title">🚇 🚌 Lokaltrafik · Farsta centrum ↔ Farsta strand</div><div class="cards local-cards"><section class="panel"><div class="local-head">Farsta centrum → Farsta strand</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-strand">Hämtar avgångar …</div></section><section class="panel"><div class="local-head">Farsta strand → Farsta centrum</div><div class="local-route">Tunnelbana 18 · Buss 181 · Buss 833</div><div class="local-list" id="local-to-centrum">Hämtar avgångar …</div></section></div><div class="local-info" id="local-status">Avgångar från SL · Uppdateras var 15:e sekund · Visar endast verifierad riktning</div></div><div id="page3" class="page"><div class="local-title">🚆 Pendelresa · Farsta strand ↔ Solna</div><div class="trip-controls"><button type="button" id="trip-out" class="active">Till Solna</button><button type="button" id="trip-home">Hem till Farsta strand</button></div><div class="trip-note">Avgångar från SL i realtid. Ankomsttider och bytestider är <strong>uppskattningar</strong> utifrån ungefärliga restider, inte bekräftade tidtabellsankomster. Kontrollera plattform och anslutning i SL innan du reser.</div><div class="trip-results" id="trip-results"><div class="note">Välj riktning för att hämta resor …</div></div><div class="local-info" id="trip-status">Endast aktiv sida uppdateras.</div></div><footer class="foot"><div><div id="status" class="status">Kontrollerar SL-anslutningen …</div><div class="note">Liveavgångar från SL · Inga påhittade tider</div></div><div class="page-switch"><button id="switch1" class="active" type="button">Hem</button><button id="switch2" type="button">Farsta C</button><button id="switch3" type="button">Solna</button></div><button id="refresh">↻ Uppdatera</button></footer></main><script>
 const $=id=>document.getElementById(id);const fmtSeconds=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',second:'2-digit'});const fmt=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit'});function isoWeekStockholm(date){
  const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(date);
  const get=type=>Number(parts.find(p=>p.type===type)?.value);
@@ -319,13 +350,13 @@ for(const d of visible){
  const when=departureDate(d),scheduled=scheduledDate(d),cancelled=isCancelled(d);
  const minutes=when?Math.max(0,Math.floor((when-Date.now())/60000)):null;
  const row=document.createElement('div');row.className='entry';
- const left=document.createElement('div');left.className='left';
+ const left=document.createElement('div');left.className='left';const lineBadge=document.createElement('div');lineBadge.className='sl-line';lineBadge.textContent=String(d.line?.designation||d.line?.name||(id==='metros'?'18':'J'));const detail=document.createElement('div');detail.className='sl-detail';
  const name=document.createElement('div');name.className='destination';name.textContent=dest(d)||'Destination saknas';
  const meta=document.createElement('div');meta.className='meta';
  const parts=[];const line=d.line?.designation||d.line?.name;if(line)parts.push('Linje '+line);
  // Spår/läge döljs för en renare avgångstavla.
  meta.textContent=parts.join(' · ');
- left.append(name,meta);
+ detail.append(name,meta);
  const notes=deviations(d),flags=document.createElement('div');flags.className='flags';
  if(notes.some(t=>/kort(?:are)? tåg|kort tågsätt|kort pendeltåg/i.test(t)))flags.append(flag('Kort tåg','warn'));
  const delay=(when&&scheduled)?Math.round((when-scheduled)/60000):0;
@@ -333,7 +364,7 @@ for(const d of visible){
  for(const note of notes.filter(t=>!/kort(?:are)? tåg|kort tågsätt|kort pendeltåg/i.test(t)).slice(0,1)){
    if(note.trim()!==common && note.length<95 && !cancelled)flags.append(flag(note,'warn'));
  }
- if(flags.childNodes.length)left.append(flags);
+ const disruption=document.createElement('div');disruption.className='sl-disruption';if(flags.childNodes.length)disruption.append(flags);left.append(lineBadge,detail);
  const right=document.createElement('div');right.className='right';const group=document.createElement('div');group.className='timegroup';
  const u=!cancelled?urgency(minutes):null;
  const mins=document.createElement('div');mins.className='mins'+(!cancelled&&u?' '+u[0]+'-minutes':'');if(cancelled){mins.classList.add('cancelled-minutes');const icon=document.createElement('span');icon.className='cancel-icon';icon.textContent='✖';icon.setAttribute('aria-hidden','true');mins.append(icon,document.createTextNode('INSTÄLLD'));}else{mins.textContent=minutes===null?(String(d.display||'')||'--'):minutes+' min';}group.append(mins);right.append(group);
@@ -342,9 +373,9 @@ for(const d of visible){
    const caption=document.createElement('span');caption.className='time-caption';caption.textContent='Avgår';dep.append(caption);
    if(scheduled&&Math.abs(when-scheduled)>=60000){const original=document.createElement('span');original.className='original-time';original.textContent=fmt.format(scheduled);dep.append(original)}
    const current=document.createElement('span');current.textContent=fmt.format(when);dep.append(current);right.append(dep);
-   if(delay>=1&&!cancelled){const info=document.createElement('div');info.className='delay-detail';info.textContent='+'+delay+' min försenat';right.append(info)}
+   if(delay>=1&&!cancelled){const info=document.createElement('div');info.className='delay-detail';info.textContent='+'+delay+' min försenat';disruption.append(info)}
  }
- row.append(left,right);node.append(row);
+ row.append(left,right);if(disruption.childNodes.length)row.append(disruption);node.append(row);
 }}
 async function fetchAlerts(id,stopDeviations){const bar=$('alerts');let texts=[];
  if(Array.isArray(stopDeviations))texts.push(...stopDeviations.map(x=>messageText(x.deviation||x)).filter(Boolean));
