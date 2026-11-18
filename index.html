@@ -689,14 +689,14 @@ setTimeout(function() {
   if (!window.familyAuthReady) {
     const el = document.getElementById('family-auth-state');
     if (el && /Kontrollerar inloggningen|Startar Google-inloggningen/.test(el.textContent)) {
-      el.textContent = 'Google-inloggningen svarar inte. Ladda om sidan i Safari. Om felet kvarstår, kontrollera att Firebase-skript kan laddas.';
+      el.textContent = 'Firebase har inte startat. Kontrollera nätverket och att Google-skript tillåts i webbläsaren. Prova att öppna sidan direkt i Safari.';
     }
   }
 }, 10000);
 </script><script type="module">
 // Google-inloggning utan Firestore-behörighet. Ingen databasåtkomst öppnas här.
-import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js';
-import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';
+import {initializeApp} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-app.js';
+import {getAuth,GoogleAuthProvider,signInWithPopup,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/11.10.0/firebase-auth.js';
 const config={apiKey:'AIzaSyCIjgNXrxBiJYE-cww-b6ch5F94lkjx1Ns',authDomain:'lindstroms-hallskarm.firebaseapp.com',projectId:'lindstroms-hallskarm',appId:'1:275135869833:web:41c6b931ffc37866a32758'};
 window.familyAuthStarted=true;
 const state=document.getElementById('family-auth-state'),uid=document.getElementById('family-auth-uid'),login=document.getElementById('family-google-login'),logout=document.getElementById('family-google-logout');
@@ -712,6 +712,5 @@ try{
  },err=>{window.familyAuthReady=true;state.textContent='Kunde inte kontrollera inloggningen: '+err.message;login.hidden=false});
  login.addEventListener('click',async()=>{state.textContent='Öppnar Google-inloggning …';try{await signInWithPopup(auth,provider)}catch(err){if(err.code==='auth/popup-blocked'||err.code==='auth/cancelled-popup-request'){state.textContent='Google-fönstret blockerades eller avbröts. Öppna sidan direkt i Safari och försök igen.'}else{state.textContent='Inloggningen misslyckades: '+err.message}}});
  logout.addEventListener('click',async()=>{try{await signOut(auth)}catch(err){state.textContent='Kunde inte logga ut: '+err.message}}});
- getRedirectResult(auth).catch(err=>{state.textContent='Inloggningsfel: '+err.message});
 }catch(err){window.familyAuthReady=true;state.textContent='Firebase kunde inte startas: '+err.message;login.hidden=false;}
 </script></body></html>
