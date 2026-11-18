@@ -390,7 +390,7 @@ for(const d of visible){
  const disruption=document.createElement('div');disruption.className='sl-disruption';if(flags.childNodes.length)disruption.append(flags);left.append(lineBadge,detail);
  const right=document.createElement('div');right.className='right';const group=document.createElement('div');group.className='timegroup';
  const u=!cancelled?urgency(minutes):null;
- const mins=document.createElement('div');mins.className='mins'+(!cancelled&&u?' '+u[0]+'-minutes':'');if(cancelled){mins.classList.add('cancelled-minutes');const icon=document.createElement('span');icon.className='cancel-icon';icon.textContent='✖';icon.setAttribute('aria-hidden','true');mins.append(icon,document.createTextNode('INSTÄLLD'));}else{mins.textContent=minutes===null?(String(d.display||'')||'--'):minutes+' min';}group.append(mins);right.append(group);
+ const mins=document.createElement('div');mins.className='mins'+(!cancelled&&u?' '+u[0]+'-minutes':'');if(cancelled){mins.classList.add('cancelled-minutes');const icon=document.createElement('span');icon.className='cancel-icon';icon.textContent='✖';icon.setAttribute('aria-hidden','true');mins.append(icon,document.createTextNode('INSTÄLLD'));}else{mins.textContent=minutes===null?(String(d.display||'')||'--'):(minutes===0?'Nu':minutes+' min');}group.append(mins);right.append(group);
  if(when){
    const dep=document.createElement('div');dep.className='departure-time';
    const caption=document.createElement('span');caption.className='time-caption';caption.textContent='Avgår';dep.append(caption);
