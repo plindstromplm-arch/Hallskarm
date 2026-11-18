@@ -675,22 +675,43 @@ $('shopping-form').addEventListener('submit',e=>{e.preventDefault();const input=
 $('shopping-clear').addEventListener('click',()=>{familyData.shopping=familyData.shopping.filter(x=>!x.done);familySave();shoppingRender()});
 for(const id of ['car-storage-note','shopping-storage-note'])$(id).textContent='Provläge: uppgifterna sparas bara i denna webbläsare. För en gemensam lista och kalender på familjens mobiler behöver vi ansluta en databas.';
 familyRenderHome();carRender();shoppingRender();
+</script><script>
+// Visar ett användbart fel även om Firebase-modulen inte kan hämtas eller köras.
+window.familyAuthStarted = false;
+window.familyAuthReady = false;
+window.addEventListener('error', function(event) {
+  const el = document.getElementById('family-auth-state');
+  if (el && !window.familyAuthReady && /firebase|module|script|import/i.test(String(event.message || '') + ' ' + String(event.filename || ''))) {
+    el.textContent = 'Inloggningen kunde inte starta. Kontrollera internetanslutningen och ladda om sidan. Detalj: ' + (event.message || 'Modulen kunde inte laddas');
+  }
+});
+setTimeout(function() {
+  if (!window.familyAuthReady) {
+    const el = document.getElementById('family-auth-state');
+    if (el && /Kontrollerar inloggningen|Startar Google-inloggningen/.test(el.textContent)) {
+      el.textContent = 'Google-inloggningen svarar inte. Ladda om sidan i Safari. Om felet kvarstår, kontrollera att Firebase-skript kan laddas.';
+    }
+  }
+}, 10000);
 </script><script type="module">
 // Google-inloggning utan Firestore-behörighet. Ingen databasåtkomst öppnas här.
 import {initializeApp} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-app.js';
 import {getAuth,GoogleAuthProvider,signInWithPopup,signInWithRedirect,getRedirectResult,onAuthStateChanged,signOut} from 'https://www.gstatic.com/firebasejs/13.4.0/firebase-auth.js';
 const config={apiKey:'AIzaSyCIjgNXrxBiJYE-cww-b6ch5F94lkjx1Ns',authDomain:'lindstroms-hallskarm.firebaseapp.com',projectId:'lindstroms-hallskarm',appId:'1:275135869833:web:41c6b931ffc37866a32758'};
+window.familyAuthStarted=true;
 const state=document.getElementById('family-auth-state'),uid=document.getElementById('family-auth-uid'),login=document.getElementById('family-google-login'),logout=document.getElementById('family-google-logout');
 try{
+ state.textContent='Startar Google-inloggningen …';
  const auth=getAuth(initializeApp(config));
  const provider=new GoogleAuthProvider();
  onAuthStateChanged(auth,user=>{
+  window.familyAuthReady=true;
   login.hidden=!!user;logout.hidden=!user;uid.hidden=!user;
   if(user){state.textContent='Inloggad: '+(user.email||user.displayName||'Google-konto');uid.replaceChildren();uid.append('Ditt användar-ID (UID): ');const code=document.createElement('code');code.textContent=user.uid;uid.append(code);const copy=document.createElement('button');copy.type='button';copy.textContent='Kopiera UID';copy.addEventListener('click',()=>navigator.clipboard?.writeText(user.uid));uid.append(' ',copy)}
   else{state.textContent='Inte inloggad';uid.textContent=''}
- },err=>{state.textContent='Kunde inte kontrollera inloggningen: '+err.message;login.hidden=false});
- login.addEventListener('click',async()=>{state.textContent='Öppnar Google-inloggning …';try{await signInWithPopup(auth,provider)}catch(err){if(err.code==='auth/popup-blocked'){state.textContent='Popup blockerades. Försök igen i Safari.'}else{state.textContent='Inloggningen misslyckades: '+err.message}}});
+ },err=>{window.familyAuthReady=true;state.textContent='Kunde inte kontrollera inloggningen: '+err.message;login.hidden=false});
+ login.addEventListener('click',async()=>{state.textContent='Öppnar Google-inloggning …';try{await signInWithPopup(auth,provider)}catch(err){if(err.code==='auth/popup-blocked'||err.code==='auth/cancelled-popup-request'){state.textContent='Google-fönstret blockerades eller avbröts. Öppna sidan direkt i Safari och försök igen.'}else{state.textContent='Inloggningen misslyckades: '+err.message}}});
  logout.addEventListener('click',async()=>{try{await signOut(auth)}catch(err){state.textContent='Kunde inte logga ut: '+err.message}}});
  getRedirectResult(auth).catch(err=>{state.textContent='Inloggningsfel: '+err.message});
-}catch(err){state.textContent='Firebase kunde inte startas: '+err.message;}
+}catch(err){window.familyAuthReady=true;state.textContent='Firebase kunde inte startas: '+err.message;login.hidden=false;}
 </script></body></html>
