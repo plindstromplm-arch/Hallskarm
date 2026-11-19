@@ -815,12 +815,25 @@ try{
  phase='kontroll av inloggningsstatus';
  state.textContent='Kontrollerar Google-inloggningen …';
  authModule.onAuthStateChanged(auth,user=>{
-  clearTimeout(timeout);window.familyAuthReady=true;diagnostic.textContent='Firebase Auth startade korrekt. Firestore är ännu inte anslutet.';
+  clearTimeout(timeout);window.familyAuthReady=true;diagnostic.textContent='Firebase Auth startade korrekt. Inloggningsmetod: popup (test 2). Firestore är ännu inte anslutet.';
   login.hidden=!!user;logout.hidden=!user;uid.hidden=!user;
   if(user){state.textContent='Inloggad: '+(user.email||user.displayName||'Google-konto');uid.replaceChildren();uid.append('Ditt användar-ID (UID): ');const code=document.createElement('code');code.textContent=user.uid;uid.append(code);const copy=document.createElement('button');copy.type='button';copy.textContent='Kopiera UID';copy.addEventListener('click',()=>navigator.clipboard?.writeText(user.uid));uid.append(' ',copy)}
   else{state.textContent='Inte inloggad';uid.textContent=''}
  },err=>{clearTimeout(timeout);window.familyAuthReady=true;show('inloggningskontroll',err);login.hidden=false});
- login.addEventListener('click',async()=>{state.textContent='Öppnar Google-inloggning …';try{await authModule.signInWithPopup(auth,provider)}catch(err){show('Google-inloggning',err)}});
+ login.addEventListener('click',async()=>{
+  state.textContent='Öppnar Google-inloggning i ett separat fönster …';
+  diagnostic.textContent='Testversion: popup-inloggning (ingen omdirigering). Om Safari blockerar fönstret visas felet här.';
+  login.disabled=true;
+  try{
+    const result=await authModule.signInWithPopup(auth,provider);
+    diagnostic.textContent='Google-popupen slutfördes. Kontrollerar inloggningsstatus …';
+    if(result.user)state.textContent='Inloggad: '+(result.user.email||result.user.displayName||'Google-konto');
+  }catch(err){
+    show('popup-inloggning',err);
+    if(err?.code==='auth/popup-blocked')diagnostic.textContent+='\nSafari blockerade popupfönstret. Kontrollera Inställningar → Appar → Safari → Blockera popupfönster.';
+    if(err?.code==='auth/popup-closed-by-user')diagnostic.textContent+='\nInloggningsfönstret stängdes innan inloggningen blev klar.';
+  }finally{login.disabled=false}
+ });
  logout.addEventListener('click',async()=>{try{await authModule.signOut(auth)}catch(err){show('utloggning',err)}});
 }catch(err){clearTimeout(timeout);window.familyAuthReady=true;show(phase,err);login.hidden=true;}
 </script></body></html>
