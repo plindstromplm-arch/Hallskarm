@@ -451,7 +451,7 @@ html,body{height:100dvh;overflow:hidden}body{padding:8px 12px}.wrap{height:100%;
 
 /* Gemensam tågmiljö: illustrerade SL-tåg med säsong och väder. */
 .rail-scene{position:relative;flex:0 0 auto;height:clamp(120px,17vh,190px);border:1px solid #415a76;border-radius:17px;overflow:hidden;margin:0 2px 9px;background:#1b344e;isolation:isolate}
-.rail-scene .rail-background{position:absolute;inset:0;background-size:cover;background-position:center 51%;transition:opacity .5s}
+.rail-scene .rail-background{position:absolute;inset:0;background-size:100% 100%;background-repeat:no-repeat;background-position:center;transition:opacity .5s}
 .rail-scene::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(90deg,rgba(5,13,28,.48),transparent 55%,rgba(5,13,28,.12));z-index:1}
 .rail-scene .rail-label{position:absolute;z-index:3;top:10px;left:13px;color:white;font-size:clamp(12px,1.3vw,17px);font-weight:800;background:#0c1e33bb;border:1px solid #ffffff66;border-radius:9px;padding:6px 10px;text-shadow:0 1px 3px #000}
 .rail-scene .rail-conditions{position:absolute;z-index:3;right:10px;bottom:9px;color:#fff;background:#0c1e33c9;border-radius:8px;padding:5px 9px;font-size:clamp(11px,1.15vw,14px);font-weight:700}
