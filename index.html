@@ -523,22 +523,24 @@ drawWeatherPerson(null,3);
 // SMHI:s prognos är förstahandskälla för temperatur och nederbördstyp.
 // Open-Meteo används som reserv och för soldata och nederbördssannolikhet.
 const smhiWeatherCodes={1:0,2:1,3:2,4:2,5:3,6:3,7:45,8:80,9:81,10:81,11:95,12:68,13:68,14:68,15:85,16:86,17:86,18:95,19:61,20:63,21:65,22:95,23:68,24:68,25:68,26:71,27:73,28:75};
-function smhiParam(entry,name){return entry.parameters?.find(p=>p.name===name)?.values?.[0]}
+function smhiParam(entry,name){const v=entry?.data?.[name];return typeof v==='number'&&Number.isFinite(v)&&v!==9999?v:null}
 function stockholmHour(utc){const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date(utc));const get=k=>parts.find(p=>p.type===k)?.value;return get('year')+'-'+get('month')+'-'+get('day')+'T'+get('hour')+':00'}
-function smhiCode(entry){const symbol=Number(smhiParam(entry,'Wsymb2'));const pcat=Number(smhiParam(entry,'pcat'));let code=smhiWeatherCodes[symbol];if(code==null)return null;
- // SMHI pcat: 0 ingen, 1 snö, 2 snöblandat regn, 3 regn, 4 duggregn, 5 underkylt regn, 6 underkylt duggregn.
+function smhiCode(entry){const symbol=smhiParam(entry,'symbol_code');const pcat=smhiParam(entry,'predominant_precipitation_type_at_surface');let code=smhiWeatherCodes[symbol];if(code==null)return null;
+ // SMHI: 1 snö, 2 snöblandat, 3 regn. Väderkoden styr symbolen, pcat förtydligar nederbördstyp.
  if(pcat===1&&code>=51&&code<=82)code=71;
- if(pcat===2&&((code>=51&&code<=82)||(code>=71&&code<=86)))code=68;
+ if(pcat===2&&code>=51&&code<=86)code=68;
  return code;
 }
 async function overlaySmhi(j){
- const url='https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/18.101/lat/59.236/data.json';
+ const url='https://opendata-download-metfcst.smhi.se/api/category/snow1g/version/1/geotype/point/lon/18.101/lat/59.236/data.json';
  const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('SMHI '+response.status);
  const data=await response.json();if(!Array.isArray(data.timeSeries)||!data.timeSeries.length)throw Error('SMHI saknar prognos');
- const entries=new Map(data.timeSeries.map(x=>[stockholmHour(x.validTime),x]));
- const h=j.hourly;if(h?.time){h.time.forEach((t,i)=>{const e=entries.get(t);if(!e)return;const temp=smhiParam(e,'t'),code=smhiCode(e);if(Number.isFinite(temp))h.temperature_2m[i]=temp;if(code!=null)h.weather_code[i]=code})}
+ const entries=new Map(data.timeSeries.map(x=>[stockholmHour(x.time),x]));
+ const h=j.hourly;let updated=0;
+ if(h?.time){h.time.forEach((t,i)=>{const e=entries.get(t);if(!e)return;const temp=smhiParam(e,'air_temperature'),code=smhiCode(e);if(temp!=null){h.temperature_2m[i]=temp;updated++}if(code!=null)h.weather_code[i]=code})}
  const currentHour=stockholmHour(new Date().toISOString());const currentEntry=entries.get(currentHour);
- if(currentEntry){const temp=smhiParam(currentEntry,'t'),code=smhiCode(currentEntry);if(Number.isFinite(temp))j.current.temperature_2m=temp;if(code!=null)j.current.weather_code=code}
+ if(currentEntry){const temp=smhiParam(currentEntry,'air_temperature'),code=smhiCode(currentEntry);if(temp!=null){j.current.temperature_2m=temp;updated++}if(code!=null)j.current.weather_code=code}
+ if(!updated)throw Error('SMHI saknar matchande timmar');
  return true;
 }
 async function weather(){try{
