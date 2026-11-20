@@ -476,7 +476,7 @@ function tick(){let d=new Date();applyWeekdayTheme(d);const stockholmParts=new I
 // Kalender-API: visa bara namnsdag om källan svarar med dagens datum.
 let lastNameDayKey='';async function nameday(){const now=new Date();const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);if(day===lastNameDayKey)return;lastNameDayKey=day;
  try{const [year,month,date]=day.split('-');const r=await fetch('https://sholiday.faboul.se/dagar/v2.1/'+year+'/'+month+'/'+date,{cache:'no-store'});if(!r.ok)throw Error('kalender');const j=await r.json();const entries=j.dagar||[];const item=entries.find(x=>x.datum===day)||entries[0];const names=item?.namnsdag||[];$('nameday').textContent=names.length?'Namnsdag: '+names.join(', '):''}catch(e){$('nameday').textContent='';lastNameDayKey=''}}nameday();setInterval(nameday,3600000);
-const codes={0:['Klart','☀️'],1:['Mestadels klart','🌤️'],2:['Halvklart','⛅'],3:['Mulet','☁️'],45:['Dimma','🌫️'],48:['Dimma','🌫️'],61:['Regn','🌧️'],63:['Regn','🌧️'],65:['Regn','🌧️'],71:['Snö','🌨️'],73:['Snö','🌨️'],75:['Snö','❄️'],80:['Skurar','🌦️'],81:['Skurar','🌧️'],95:['Åska','⛈️']};
+const codes={68:['Snöblandat regn','🌨️'],85:['Snöbyar','🌨️'],86:['Snöbyar','❄️'],0:['Klart','☀️'],1:['Mestadels klart','🌤️'],2:['Halvklart','⛅'],3:['Mulet','☁️'],45:['Dimma','🌫️'],48:['Dimma','🌫️'],61:['Regn','🌧️'],63:['Regn','🌧️'],65:['Regn','🌧️'],71:['Snö','🌨️'],73:['Snö','🌨️'],75:['Snö','❄️'],80:['Skurar','🌦️'],81:['Skurar','🌧️'],95:['Åska','⛈️']};
 // Väderkille: SVG ritas lokalt, inga bildtjänster eller extra API-anrop behövs.
 function drawWeatherPerson(temperature,code){
  const el=$('weather-person');if(!el)return;
@@ -520,10 +520,31 @@ function drawWeatherPerson(temperature,code){
 }
 drawWeatherPerson(null,3);
 
+// SMHI:s prognos är förstahandskälla för temperatur och nederbördstyp.
+// Open-Meteo används som reserv och för soldata och nederbördssannolikhet.
+const smhiWeatherCodes={1:0,2:1,3:2,4:2,5:3,6:3,7:45,8:80,9:81,10:81,11:95,12:68,13:68,14:68,15:85,16:86,17:86,18:95,19:61,20:63,21:65,22:95,23:68,24:68,25:68,26:71,27:73,28:75};
+function smhiParam(entry,name){return entry.parameters?.find(p=>p.name===name)?.values?.[0]}
+function stockholmHour(utc){const parts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',hourCycle:'h23'}).formatToParts(new Date(utc));const get=k=>parts.find(p=>p.type===k)?.value;return get('year')+'-'+get('month')+'-'+get('day')+'T'+get('hour')+':00'}
+function smhiCode(entry){const symbol=Number(smhiParam(entry,'Wsymb2'));const pcat=Number(smhiParam(entry,'pcat'));let code=smhiWeatherCodes[symbol];if(code==null)return null;
+ // SMHI pcat: 0 ingen, 1 snö, 2 snöblandat regn, 3 regn, 4 duggregn, 5 underkylt regn, 6 underkylt duggregn.
+ if(pcat===1&&code>=51&&code<=82)code=71;
+ if(pcat===2&&((code>=51&&code<=82)||(code>=71&&code<=86)))code=68;
+ return code;
+}
+async function overlaySmhi(j){
+ const url='https://opendata-download-metfcst.smhi.se/api/category/pmp3g/version/2/geotype/point/lon/18.101/lat/59.236/data.json';
+ const response=await fetch(url,{cache:'no-store'});if(!response.ok)throw Error('SMHI '+response.status);
+ const data=await response.json();if(!Array.isArray(data.timeSeries)||!data.timeSeries.length)throw Error('SMHI saknar prognos');
+ const entries=new Map(data.timeSeries.map(x=>[stockholmHour(x.validTime),x]));
+ const h=j.hourly;if(h?.time){h.time.forEach((t,i)=>{const e=entries.get(t);if(!e)return;const temp=smhiParam(e,'t'),code=smhiCode(e);if(Number.isFinite(temp))h.temperature_2m[i]=temp;if(code!=null)h.weather_code[i]=code})}
+ const currentHour=stockholmHour(new Date().toISOString());const currentEntry=entries.get(currentHour);
+ if(currentEntry){const temp=smhiParam(currentEntry,'t'),code=smhiCode(currentEntry);if(Number.isFinite(temp))j.current.temperature_2m=temp;if(code!=null)j.current.weather_code=code}
+ return true;
+}
 async function weather(){try{
  const url='https://api.open-meteo.com/v1/forecast?latitude=59.236&longitude=18.101&current=temperature_2m,weather_code&minutely_15=precipitation&hourly=temperature_2m,weather_code,precipitation_probability&daily=sunrise,sunset&forecast_days=3&timezone=Europe%2FStockholm';
  const r=await fetch(url,{cache:'no-store'});if(!r.ok)throw Error('HTTP '+r.status);
- const j=await r.json(),c=j.current,w=codes[c.weather_code]||['Växlande väder','🌤️'];
+ const j=await r.json();let weatherSource='Open-Meteo (reserv)';try{await overlaySmhi(j);weatherSource='SMHI'}catch(err){console.warn('SMHI otillgängligt, använder reservprognos',err)}const c=j.current,w=codes[c.weather_code]||['Växlande väder','🌤️'];
  const sun=j.daily;
   if(sun?.time?.length&&sun.sunrise?.length&&sun.sunset?.length){
    const localDate=(c.time||'').slice(0,10);
@@ -534,7 +555,7 @@ async function weather(){try{
    const riseTime=rise?.slice(11,16),setTime=set?.slice(11,16);
    $('suninfo').innerHTML=/^\d{2}:\d{2}$/.test(riseTime||'')&&/^\d{2}:\d{2}$/.test(setTime||'')?sunriseIcon+' '+riseTime+' &nbsp;·&nbsp; '+sunsetIcon+' '+setTime:'';
   }else $('suninfo').textContent='';
-  drawWeatherPerson(c.temperature_2m,c.weather_code);const currentTemp=Math.round(c.temperature_2m);$('temp').textContent=currentTemp+'°';$('temp').classList.toggle('temp-minus',c.temperature_2m<0);$('temp').classList.toggle('temp-plus',c.temperature_2m>0);$('temp').classList.toggle('temp-zero',c.temperature_2m===0);$('weathertext').textContent=w[0];$('weathericon').textContent=w[1];$('weatherstatus').textContent='Uppdaterat '+fmt.format(new Date());
+  drawWeatherPerson(c.temperature_2m,c.weather_code);const currentTemp=Math.round(c.temperature_2m);$('temp').textContent=currentTemp+'°';$('temp').classList.toggle('temp-minus',c.temperature_2m<0);$('temp').classList.toggle('temp-plus',c.temperature_2m>0);$('temp').classList.toggle('temp-zero',c.temperature_2m===0);$('weathertext').textContent=w[0];$('weathericon').textContent=w[1];$('weatherstatus').textContent=weatherSource+' · Uppdaterat '+fmt.format(new Date());
  const h=j.hourly,box=$('weekdays');
  if(h&&Array.isArray(h.time)&&h.time.length){
   // Använd Stockholms lokala klockslag, inte senaste prognostimmens start.
@@ -547,7 +568,7 @@ async function weather(){try{
   box.innerHTML=selected.map(i=>{
    const t=h.time[i],temp=h.temperature_2m?.[i],prob=h.precipitation_probability?.[i];
    const label=t.slice(11,16);const degree=Number.isFinite(Number(temp))&&temp!=null?Math.round(Number(temp))+'°':'–';
-   const rain=prob!=null&&Number.isFinite(Number(prob))?'☂ '+Math.round(Number(prob))+'%':'–';
+   const rain=prob!=null&&Number.isFinite(Number(prob))?'💧 '+Math.round(Number(prob))+'%':'–';
    return '<div class="weekday" title="'+t+'"><span class="day">'+label+'</span><span class="wx">'+iconFor(h.weather_code?.[i])+'</span><span class="degree">'+degree+'</span><span class="rain">'+rain+'</span></div>';
   }).join('');
  }else box.textContent='Timprognos saknas';
@@ -557,7 +578,8 @@ async function weather(){try{
  const imminent=forecast.some(v=>v>=0.1);
   const nextHours=h?.time?.map((t,i)=>({t,i})).filter(x=>x.t>=localNow&&x.t<=new Date(Date.now()+3*3600000).toLocaleString('sv-SE',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit'}).replace(' ','T')).slice(0,4)||[];
   const maxProb=nextHours.reduce((m,x)=>Math.max(m,Number(h.precipitation_probability?.[x.i])||0),0);
-  $('rainnote').textContent=imminent?'☔ Ta paraply! Regn inom 30 min':maxProb>=60?'☂️ Ta gärna paraply · '+maxProb+'% regnrisk':maxProb>=35?'☂️ Möjligt regn · '+maxProb+'% risk':forecast.length?'☀️ Paraply behövs troligen inte':'';
+  const upcomingCodes=nextHours.map(x=>h.weather_code?.[x.i]);const snowExpected=upcomingCodes.some(code=>code===68||(code>=71&&code<=77)||(code>=85&&code<=86));const mixedExpected=upcomingCodes.includes(68);
+  $('rainnote').textContent=imminent?(snowExpected?(mixedExpected?'🌨️ Nederbörd inom 30 min, möjligen snöblandat':'🌨️ Nederbörd inom 30 min, snö väntas'):'☔ Nederbörd inom 30 min'):maxProb>=60?(snowExpected?(mixedExpected?'🌨️ Snöblandad nederbörd möjlig':'❄️ Snö möjlig')+' · '+maxProb+'% nederbördsrisk':'☂️ Nederbörd möjlig · '+maxProb+'% risk'):maxProb>=35?(snowExpected?'🌨️ Möjlig snö eller snöblandat':'💧 Möjlig nederbörd')+' · '+maxProb+'% risk':forecast.length?'Ingen betydande nederbörd närmaste 30 min':'';
  }catch(e){$('weathertext').textContent='Väder kan inte hämtas';$('weatherstatus').textContent='Försök igen senare';$('rainnote').textContent='';$('suninfo').textContent='';$('weekdays').textContent='Timprognos kan inte hämtas';}}
 let siteId=null;let cachedTrains=[],cachedMetros=[],lastUpdated=null,loadingDepartures=false;function redrawCountdowns(){if(!lastUpdated)return;show('trains',cachedTrains);show('metros',cachedMetros)}async function getSite(){if(siteId)return siteId;const r=await fetch('https://transport.integration.sl.se/v1/sites');if(!r.ok)throw Error('Stationsregister HTTP '+r.status);const a=await r.json();const matches=a.filter(x=>String(x.name||'').toLowerCase()==='farsta strand');if(!matches.length)throw Error('Farsta strand hittades inte i stationsregistret');siteId=matches[0].id;return siteId}
 function mode(d){return String(d.line?.transport_mode||d.transport_mode||'').toUpperCase()}
