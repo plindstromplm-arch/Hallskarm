@@ -708,6 +708,32 @@ body.night .top .weatherbox::before{filter:brightness(.34) saturate(.7)}
  .top-v2 .weekdays{display:grid;grid-template-columns:repeat(4,minmax(0,1fr))}
  .top-v2 .dateextra{min-height:0}
 }
+
+/* V3: iPad: större avgångstavlor, tydlig SMHI-varning och fem balanserade toppkort. */
+@media (orientation:landscape) and (min-width:701px){
+ .wrap .top.top-v2{grid-template-columns:minmax(120px,1.1fr) minmax(185px,1.55fr) minmax(155px,1.4fr) minmax(190px,1.65fr) minmax(105px,.85fr)!important;gap:6px!important}
+ .top-v2>.v2-date,.top-v2>.clock-area,.top-v2>.v2-sunweather,.top-v2>.v2-forecast,.top-v2>.v2-nameday{min-height:77px!important;border:2px solid #a6cdf5!important;border-radius:13px!important;background:rgba(3,18,43,.95)!important;padding:6px!important}
+ .top-v2 .date{width:100%;display:flex!important;align-items:center;justify-content:space-around;gap:6px;line-height:1.1!important;font-size:clamp(15px,1.8vw,23px)!important;text-transform:capitalize}
+ .top-v2 .v3-day{max-width:60%;white-space:normal;text-align:center}
+ .top-v2 .v3-week{white-space:nowrap;border-left:1px solid #9ab8dc;padding-left:7px}
+ .top-v2 .clock.flip-clock{font-size:clamp(32px,4.3vw,59px)!important;gap:0!important;margin:0!important;letter-spacing:-.045em!important}
+ .top-v2 .flip-digit,.top-v2 .flip-digit.seconds{background:none!important;border:0!important;box-shadow:none!important;border-radius:0!important;width:.64em!important;height:1.06em!important;font-size:1em!important;overflow:visible!important}
+ .top-v2 .flip-digit:after{display:none!important}
+ .top-v2 .flip-colon{font-size:.85em!important;margin:0!important;color:#fff!important}
+ .top-v2 .v2-name-title{font-size:14px!important}
+ .top-v2 .dateextra{font-size:clamp(12px,1.35vw,18px)!important;font-weight:750!important;overflow-wrap:anywhere}
+ .top-v2>.smhi-warning:not([hidden]){display:flex!important;align-items:center!important;min-height:35px!important;padding:7px 12px!important;margin:2px 0 3px!important;background:rgba(37,28,4,.95)!important;color:#fff!important;border:2px solid #ffe100!important;border-radius:11px!important;font-size:clamp(13px,1.35vw,17px)!important;line-height:1.35!important;box-shadow:0 2px 8px #0007!important}
+ .top-v2>.smhi-warning:not([hidden])::before{content:'⚠️';font-size:20px;margin-right:9px;flex:none}
+ .top-v2>.smhi-warning a{color:#ffe400!important;font-weight:800!important;margin-left:auto!important;padding-left:12px!important}
+ #page1 .cards{flex:1 1 auto!important;min-height:225px!important;gap:10px!important}
+ #page1 .panel{display:flex;flex-direction:column;min-height:0!important;padding:10px 12px!important}
+ #page1 .entry{padding:6px 7px!important;min-height:0!important;flex:1 1 0!important;align-content:center!important}
+ #page1 .destination{font-size:clamp(21px,2.45vw,29px)!important}
+ #page1 .mins,#page1 .departure-time{font-size:clamp(23px,2.65vw,31px)!important}
+ #page1 .sl-line{font-size:clamp(22px,2.4vw,28px)!important}
+ #page1 .rail-scene>.rail-worker-v2{height:clamp(110px,17vh,170px)!important;bottom:9px!important;left:50%!important;transform:translateX(-50%)!important}
+}
+@media(max-width:700px),(orientation:portrait){.top-v2 .v3-week{margin-left:8px}.top-v2 .v3-day{font-weight:800}}
 </style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: AleWi, https://commons.wikimedia.org/wiki/File:SL_C20,_Medborgarplatsen_-_20250101_-_10.jpg (se filens licensvillkor). --></head><body><main class="wrap"><div class="unified-landscape" aria-hidden="true"></div><header class="top top-v2">
 <div class="v2-date"><div class="date" id="date">Startar klockan …</div></div>
 <div class="clock-area"><div class="clock-temp-row"><div class="clock" id="clock">--:--</div></div></div>
@@ -823,7 +849,7 @@ function updateFlipClock(now){
  });
 }
 
-function tick(){let d=new Date();applyWeekdayTheme(d);const stockholmParts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d);const getPart=t=>Number(stockholmParts.find(p=>p.type===t)?.value||0);const minuteOfDay=getPart('hour')*60+getPart('minute');document.body.classList.toggle('night',minuteOfDay>=22*60||minuteOfDay<6*60+30);updateFlipClock(d);$('date').textContent=new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',weekday:'long',day:'numeric',month:'long'}).format(d)+' · Vecka '+isoWeekStockholm(d)}tick();setInterval(tick,1000);
+function tick(){let d=new Date();applyWeekdayTheme(d);const stockholmParts=new Intl.DateTimeFormat('en-GB',{timeZone:'Europe/Stockholm',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).formatToParts(d);const getPart=t=>Number(stockholmParts.find(p=>p.type===t)?.value||0);const minuteOfDay=getPart('hour')*60+getPart('minute');document.body.classList.toggle('night',minuteOfDay>=22*60||minuteOfDay<6*60+30);updateFlipClock(d);$('date').innerHTML='<span class="v3-day">'+new Intl.DateTimeFormat('sv-SE',{timeZone:'Europe/Stockholm',weekday:'short',day:'numeric',month:'short'}).format(d)+'</span><span class="v3-week">v. '+isoWeekStockholm(d)+'</span>'}tick();setInterval(tick,1000);
 // Kalender-API: visa bara namnsdag om källan svarar med dagens datum.
 let lastNameDayKey='';async function nameday(){const now=new Date();const day=new Intl.DateTimeFormat('en-CA',{timeZone:'Europe/Stockholm',year:'numeric',month:'2-digit',day:'2-digit'}).format(now);if(day===lastNameDayKey)return;lastNameDayKey=day;
  try{const [year,month,date]=day.split('-');const r=await fetch('https://sholiday.faboul.se/dagar/v2.1/'+year+'/'+month+'/'+date,{cache:'no-store'});if(!r.ok)throw Error('kalender');const j=await r.json();const entries=j.dagar||[];const item=entries.find(x=>x.datum===day)||entries[0];const names=item?.namnsdag||[];$('nameday').textContent=names.length?'Namnsdag: '+names.join(', '):''}catch(e){$('nameday').textContent='';lastNameDayKey=''}}nameday();setInterval(nameday,3600000);
