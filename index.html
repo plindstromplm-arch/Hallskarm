@@ -773,12 +773,35 @@ body.night .top .weatherbox::before{filter:brightness(.34) saturate(.7)}
 #suninfo .sun-horizon{stroke-width:2.1}
 #suninfo .sun-arrow{stroke-width:2.1}
 @media(max-width:700px){#suninfo .sun-time svg{width:19px!important;height:19px!important}#suninfo.suninfo-header{gap:5px!important}}
+
+/* Topp V5: datum, vecka och namnsdag tillsammans; solens tider i eget kort. */
+@media (orientation:landscape) and (min-width:701px) {
+ .wrap .top.top-v2{grid-template-columns:minmax(145px,1.22fr) minmax(185px,1.65fr) minmax(115px,1fr) minmax(105px,.9fr) minmax(190px,1.7fr)!important}
+ .top-v2>.v2-date{grid-column:1!important;grid-row:1!important;display:flex!important;flex-direction:column!important;align-items:center!important;justify-content:center!important;gap:6px!important}
+ .top-v2>.clock-area{grid-column:2!important;grid-row:1!important}
+ .top-v2>.v2-sunpanel{grid-column:3!important;grid-row:1!important}
+ .top-v2>.v2-sunweather{grid-column:4!important;grid-row:1!important}
+ .top-v2>.v2-forecast{grid-column:5!important;grid-row:1!important}
+ .top-v2>.v2-sunpanel{min-height:77px!important;border:2px solid #a6cdf5!important;border-radius:13px!important;background:#03122b!important;padding:6px!important;display:flex!important;align-items:center!important;justify-content:center!important;box-sizing:border-box!important}
+ .top-v2>.v2-date .date{font-size:clamp(13px,1.45vw,19px)!important}
+ .top-v2>.v2-date .dateextra{font-size:clamp(10px,1.08vw,14px)!important;text-align:center!important;line-height:1.15!important;overflow-wrap:normal!important}
+ .top-v2>.v2-sunpanel #suninfo{display:flex!important;flex-direction:column!important;align-items:center!important;gap:7px!important}
+ .top-v2>.v2-sunpanel #suninfo .sun-time{font-size:clamp(11px,1.25vw,16px)!important;gap:5px!important}
+ .top-v2>.v2-sunweather .v2-now{justify-content:center!important}
+}
+@media(max-width:700px),(orientation:portrait){
+ .top-v2>.v2-sunpanel{order:2!important;background:#03122b;border:1px solid #a6cdf5;border-radius:10px;padding:7px;display:flex;justify-content:center}
+ .top-v2>.v2-sunweather{order:3!important}
+ .top-v2>.v2-forecast{order:4!important}
+ .top-v2>.smhi-warning{order:5!important}
+ .top-v2>.v2-date .dateextra{text-align:center}
+}
 </style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: AleWi, https://commons.wikimedia.org/wiki/File:SL_C20,_Medborgarplatsen_-_20250101_-_10.jpg (se filens licensvillkor). --></head><body><main class="wrap"><div class="unified-landscape" aria-hidden="true"></div><header class="top top-v2">
-<div class="v2-date"><div class="date" id="date">Startar klockan …</div></div>
+<div class="v2-date"><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div>
 <div class="clock-area"><div class="clock-temp-row"><div class="clock" id="clock">--:--</div></div></div>
-<div class="v2-sunweather"><div class="suninfo suninfo-header" id="suninfo" aria-label="Soluppgång och solnedgång"></div><div class="v2-now"><div class="emoji" id="weathericon">☁️</div><div class="temp clock-side-temp" id="temp">--°</div><div class="weather-current"><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div></div></div></div>
+<div class="v2-sunpanel"><div class="suninfo suninfo-header" id="suninfo" aria-label="Soluppgång och solnedgång"></div></div><div class="v2-sunweather"><div class="v2-now"><div class="emoji" id="weathericon">☁️</div><div class="temp clock-side-temp" id="temp">--°</div><div class="weather-current"><div class="muted" id="weathertext">Hämtar väder …</div><div class="weatherstatus" id="weatherstatus"></div><div class="rainnote" id="rainnote"></div></div></div></div>
 <section class="weekforecast v2-forecast" aria-label="Väderprognos för kommande timmar"><div class="weekdays" id="weekdays"><div class="note">Hämtar timprognos …</div></div></section>
-<div class="v2-nameday"><div class="dateextra" id="nameday"></div></div>
+
 <div class="weather-person" id="weather-person" role="img" aria-label="Väderfigur" hidden></div>
 <div id="smhi-warning" class="smhi-warning" role="status" aria-live="polite" hidden></div>
 </header><div id="page1" class="page active"><div class="rail-scene" aria-label="Illustrerad pendeltåg och tunnelbana i årstidens väder" data-weather="clear"><aside class="canaria-weather" id="canaria-weather" aria-label="Väder i Playa del Inglés">
