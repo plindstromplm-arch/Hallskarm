@@ -809,6 +809,9 @@ body.night .top .weatherbox::before{filter:brightness(.34) saturate(.7)}
  body.mobile-home-trip #page4 .sl-board-head{padding:0 0 4px!important;margin:0 0 3px!important;gap:5px!important}body.mobile-home-trip #page4 .sl-mark,body.mobile-home-trip #page4 .sl-head-sub{display:none!important}
  body.mobile-home-trip #page4 .sl-head-title{font-size:19px!important;line-height:1.15!important}body.mobile-home-trip #page4 .sl-columns,body.mobile-home-trip #page4 .entry{padding:4px 3px!important;gap:4px!important;grid-template-columns:37px minmax(0,1fr) 68px 53px!important}body.mobile-home-trip #page4 .entry{min-height:32px!important}body.mobile-home-trip #page4 .sl-line{padding:3px 1px!important}body.mobile-home-trip #page4 .destination{font-size:14px!important}body.mobile-home-trip #page4 .mins,body.mobile-home-trip #page4 .departure-time{font-size:15px!important}body.mobile-home-trip #page4 .sl-disruption:empty{display:none!important}
 }
+
+/* Tillfälligt pausade familjefunktioner. */
+#switch5,#switch6,#family-home-summary,#page5,#page6{display:none!important}
 </style><!-- Fotokällor: X60: Udo Schröter, CC BY-SA 3.0, https://commons.wikimedia.org/wiki/File:Ny_pendeltag_stockholm.jpg ; C20: AleWi, https://commons.wikimedia.org/wiki/File:SL_C20,_Medborgarplatsen_-_20250101_-_10.jpg (se filens licensvillkor). --></head><body><main class="wrap"><div class="unified-landscape" aria-hidden="true"></div><header class="top top-v2">
 <div class="v2-date"><div class="date" id="date">Startar klockan …</div><div class="dateextra" id="nameday"></div></div>
 <div class="clock-area"><div class="clock-temp-row"><div class="clock" id="clock">--:--</div></div></div>
@@ -1215,8 +1218,13 @@ async function localDepartures(){
 // Varje sida hämtar trafik endast när den är vald.
 let activePage=1,tripDirection='out',tripLoading=false,tripSites=null,tripGeneration=0;
 function refreshCurrentTraffic(){if(activePage===1)departures();else if(activePage===2)localDepartures();else if(activePage===3)tripDepartures();else if(activePage===4)homeDepartures()}
-function setPage(n){activePage=n;document.body.classList.toggle("mobile-home-trip",n===4);for(let i=1;i<=6;i++){$('page'+i).classList.toggle('active',i===n);$('switch'+i).classList.toggle('active',i===n)}refreshCurrentTraffic()}
-for(let i=1;i<=6;i++)$('switch'+i).addEventListener('click',()=>setPage(i));
+function setPage(n){if(n===5||n===6)n=1;activePage=n;document.body.classList.toggle("mobile-home-trip",n===4);for(let i=1;i<=6;i++){$('page'+i).classList.toggle('active',i===n);$('switch'+i).classList.toggle('active',i===n)}refreshCurrentTraffic()}
+const pageHashes=['hem','farsta','solna','hemresa'];
+function openLinkedPage(){const n=pageHashes.indexOf(location.hash.slice(1).toLowerCase())+1;setPage(n||1);}
+for(let i=1;i<=4;i++)$('switch'+i).addEventListener('click',()=>{const hash='#'+pageHashes[i-1];if(location.hash===hash)setPage(i);else location.hash=hash;});
+window.addEventListener('hashchange',openLinkedPage);
+// Wait until all traffic state and functions have been initialized.
+window.addEventListener('DOMContentLoaded',()=>{if(location.hash)openLinkedPage();});
 $('trip-out').addEventListener('click',()=>setTripDirection('out'));
 $('trip-home').addEventListener('click',()=>setTripDirection('home'));
 function setTripDirection(dir){tripDirection=dir;tripGeneration++;$('trip-out').classList.toggle('active',dir==='out');$('trip-home').classList.toggle('active',dir==='home');$('trip-results').textContent='Hämtar avgångar …';if(activePage===3)tripDepartures()}
